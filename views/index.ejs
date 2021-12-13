@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300;1,400&family=Roboto+Mono:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <title>Police OS</title>
+</head>
+<body>
+    <div id="logo"><h1>PoliceOS</h1></div>
+
+    <div id="buttons">
+        <input type="text" id="SearchPearson" placeholder="Wpisz imie i nazwisko">
+        <button id="submitPearson">Szukaj</button>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div id="border" style="border-top: 2px solid; margin: 10px 15px 5px 5px;"></div>
+
+    <div id="leftBar">
+        <ul><b>Mandaty</b></ul>
+        <ul><b>Aresztowania</b></ul>
+        <ul><b>Notatki</b></ul>
+
+        <div id="aboutPoliceMan">
+            <h4 id="policeManName" >Funkcjonariusz: </h4>
+            <h4 id="policeManRank" >Stopień: </h4>
+        </div>
+    </div>
+
+    <div id="pearsonData">
+
+        <h2 id="dataList">Kartoteka:</h2>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
