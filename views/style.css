@@ -83,11 +83,16 @@ body{
     text-align: center;
     font-size: medium;
     background-color: #0545aa;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    transition: 0.75s;
 }
 
 #leftBar>ul:hover{
     background-color: #1255c0;
-    color: #8daee4
+    color: #8daee4;
+    width: 155px;
+    height: 40px;
 }
 
 #pearsonData{
