@@ -185,7 +185,7 @@ button {
 #root #logo {
   background: #135DD8;
   text-align: center;
-  padding: 12px 0px;
+  padding: 10px 0px;
 }
 
 #root #logo h1 {
@@ -289,7 +289,7 @@ button {
 }
 
 #root .main-section .main-view .search-bar #search {
-  width: 25ch;
+  width: 20ch;
   background-color: rgba(255, 255, 255, 0.75);
   color: rgba(0, 0, 0, 0.75);
   padding: 6px 12px;
