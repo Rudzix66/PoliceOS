@@ -1,35 +1,61 @@
-const policeManName = document.getElementById("policeManName");
-const policeManRank = document.getElementById("policeManRank");
+( function ()
+{
+  const alertBox = document.querySelector( ".alert-box" );
+  const alertInputs = alertBox.querySelectorAll( "input" );
+  const alertBtn = alertBox.querySelector( "button" );
+  const userName = document.querySelector( "#user-name" );
+  const userStatus = document.querySelector( "#user-status" );
+  const localUser = localStorage.getItem( "user" );
 
-let userName = "";
-let userRank = "";
+  if ( !localUser )
+  {
+    alertInputs.forEach( input =>
+    {
+      input.addEventListener( "keyup", debounce( alertInputEvent ) );
+      input.addEventListener( "change", debounce( alertInputEvent ) );
+    } );
 
-function checkUserData() {
-  if (userName == "" || userRank == "") {
-    userName = prompt("Podaj swoje imię");
-    userRank = prompt("Podaj swoją rangę");
+    alertBtn.addEventListener( "click", function ()
+    {
+      const name = [ ...alertInputs ].filter( input => input.dataset.name === "name" );
+      const status = [ ...alertInputs ].filter( input => input.dataset.name === "status" );
+      const nameVal = name[ 0 ].value.trim();
+      const statusVal = status[ 0 ].value.trim();
+
+      userName.textContent = nameVal;
+      userStatus.textContent = statusVal;
+
+      localStorage.setItem( "user", JSON.stringify( { name: nameVal, status: statusVal } ) );
+
+      alertBox.remove();
+    } );
+  } else
+  {
+    const userData = JSON.parse( localUser );
+    userName.textContent = userData.name;
+    userStatus.textContent = userData.status;
+    alertBox.remove();
   }
-  if (userName === null || userRank === null) {
-      alert("Nie podano danych!");
 
-    policeManRank.innerHTML = `Stopień: ${userRank}`;
-    policeManName.innerHTML = `Funkcjnariusz: ${userName}`;
-  } else{
-    policeManRank.innerHTML = `Stopień: ${userRank}`;
-    policeManName.innerHTML = `Funkcjnariusz: ${userName}`;
+  function alertInputEvent ()
+  {
+    const isEmpty = [ ...alertInputs ].every( el => el.value );
+    if ( !isEmpty )
+    {
+      alertBtn.classList.add( "disabled" );
+    } else
+    {
+      alertBtn.classList.remove( "disabled" );
+    }
   }
-}
-checkUserData();
+}() );
 
-function debounce(func, timeout = 300){
+function debounce ( fn = () => { }, delay = 300 )
+{
   let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout)
-  };
+  return ( ...args ) =>
+  {
+    window.clearTimeout( timer );
+    setTimeout( fn.call( ...args ), delay );
+  }
 }
-const processChange = debounce(() => {
-  const lookedPearson = document.getElementById("SearchPearson").value;
-  const pearson = lookedPearson.toString();
-  console.log(lookedPearson);
-});
