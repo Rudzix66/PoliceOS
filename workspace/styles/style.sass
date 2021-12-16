@@ -45,6 +45,14 @@ button
   display: flex
   flex-direction: column
 
+.edit-user-info
+  display: flex
+
+.user-info
+  border-bottom: #333333 2px solid
+
+// .user-data  
+//   border:#3178ed 2px solid
 // DOM elements
 
 .alert-box
@@ -140,12 +148,17 @@ button
         display: flex
         justify-content: space-between
         align-items: center
+        min-height: 8vh
         span
           &:last-child
             margin-left: 8px
             text-align: right
         &:first-child
           margin-bottom: 12px
+
+      .user-info:hover
+        background-color: #0e38a8
+    
     .main-view
       display: flex
       flex-direction: column

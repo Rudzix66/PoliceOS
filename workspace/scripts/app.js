@@ -5,6 +5,7 @@
   const userName = document.querySelector("#user-name");
   const userStatus = document.querySelector("#user-status");
   const localUser = localStorage.getItem("user");
+  const editUserInfo = document.querySelector(".edit-user-info");
 
   if (!localUser) {
     alertInputs.forEach((input) => {
@@ -47,6 +48,13 @@
       alertBtn.classList.remove("disabled");
     }
   }
+
+  editUserInfo.addEventListener("click", () => {
+    
+  })
+
+
+
 })();
 
 function debounce(fn = () => {}, delay = 300) {
