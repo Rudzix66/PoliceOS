@@ -1,4 +1,5 @@
 $poppins: "../fonts/poppins/"
+$icon: "../fonts/icons/"
 
 =fontface($family,$src,$weight,$style: normal,$format: "truetype")
   @font-face
@@ -7,6 +8,24 @@ $poppins: "../fonts/poppins/"
     font-weight: $weight
     font-style: $style
 
++fontface("Icons","#{$icon}MaterialIcons-Regular.ttf",100)
++fontface("Icons","#{$icon}MaterialIconsRound-Regular.otf",200,"OpenType")
++fontface("Icons","#{$icon}MaterialIconsSharp-Regular.otf",300,"OpenType")
++fontface("Icons","#{$icon}MaterialIconsTwoTone-Regular.otf",400,"OpenType")
+
+.icons
+  font-family: "Icons"
+  font-style: normal
+  font-weight: 100
+  text-transform: lowercase
+  &-round
+    font-weight: 200
+  &-outline
+    font-weight: 300
+  &-sharp
+    font-weight: 400
+  &-tone
+    font-weight: 500
 +fontface("Poppins","#{$poppins}Poppins-Thin.ttf",100)
 +fontface("Poppins","#{$poppins}Poppins-ThinItalic.ttf",100,italic)
 +fontface("Poppins","#{$poppins}Poppins-ExtraLight.ttf",200)
