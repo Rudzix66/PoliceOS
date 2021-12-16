@@ -1,1 +1,27 @@
 $poppins: "../fonts/poppins/"
+
+=fontface($family,$src,$weight,$style: normal,$format: "truetype")
+  @font-face
+    font-family: $family
+    src: url($src) format()
+    font-weight: $weight
+    font-style: $style
+
++fontface("Poppins","#{$poppins}Poppins-Thin.ttf",100)
++fontface("Poppins","#{$poppins}Poppins-ThinItalic.ttf",100,italic)
++fontface("Poppins","#{$poppins}Poppins-ExtraLight.ttf",200)
++fontface("Poppins","#{$poppins}Poppins-ExtraLightItalic.ttf",200,italic)
++fontface("Poppins","#{$poppins}Poppins-Light.ttf",300)
++fontface("Poppins","#{$poppins}Poppins-LightItalic.ttf",500,italic)
++fontface("Poppins","#{$poppins}Poppins-Regular.ttf",400)
++fontface("Poppins","#{$poppins}Poppins-RegularItalic.ttf",400,italic)
++fontface("Poppins","#{$poppins}Poppins-Medium.ttf",500)
++fontface("Poppins","#{$poppins}Poppins-MediumItalic.ttf",500,italic)
++fontface("Poppins","#{$poppins}Poppins-SemiBold.ttf",600)
++fontface("Poppins","#{$poppins}Poppins-SemiBoldItalic.ttf",600,italic)
++fontface("Poppins","#{$poppins}Poppins-Bold.ttf",700)
++fontface("Poppins","#{$poppins}Poppins-BoldItalic.ttf",700)
++fontface("Poppins","#{$poppins}Poppins-ExtraBold.ttf",800)
++fontface("Poppins","#{$poppins}Poppins-ExtraBoldItalic.ttf",800)
++fontface("Poppins","#{$poppins}Poppins-Black.ttf",900)
++fontface("Poppins","#{$poppins}Poppins-BlackItalic.ttf",900,italic)
