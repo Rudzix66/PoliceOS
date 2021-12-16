@@ -2,8 +2,7 @@
     "ID": 1,
     "Data":{
         "fullName": "Kuba Dąbrowa",
-        "age": 12,
-        "rank": "SierżantII",
+        "age": 22,
         "warrant": ["Składanie fałszywych zeznań"],
         "citations": []
     }
