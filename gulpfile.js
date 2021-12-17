@@ -8,19 +8,32 @@ const { dest } = require( "vinyl-fs" );
 const sass = {
   from: "./workspace/styles/*.sass",
   to: "./views/styles",
+  
+  run = ()=>{
+    console.log("sass finished");
+  }
 };
 const prefix = require( "gulp-autoprefixer" );
 const js = {
   from: "./workspace/scripts/*.js",
   to: "./views/scripts",
+  run = ()=>{
+    console.log("JS finished");
+  }
 };
 const components = {
   from: "./workspace/scripts/components/*.js",
   to: "./views/scripts/components",
+  run = ()=>{
+    console.log("JS finished");
+  }
 };
 const html = {
   from: "./workspace/html/*.html",
   to: "./views/html",
+  run = ()=>{
+    console.log("HTML finished");
+  }
 };
 
 // autoprefixer
