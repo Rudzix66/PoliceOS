@@ -20,6 +20,11 @@
   userData.addEventListener("click", () => {
     const copied = `Funkcjonariusz: ${userName.textContent.trim()} Stopień: ${userStatus.textContent.trim()}`;
     navigator.clipboard.writeText(copied);
+    if(localStorage.getItem("show" === "false")) {
+
+    } else{
+      indexCoppyMessage()
+    }
   });
 })();
 
@@ -83,4 +88,38 @@ function indexAlertBox() {
       submit.classList.remove("disabled");
     }
   }
+}
+
+function indexCoppyMessage() {
+  const div = document.createElement("div");
+  const coppyMess = `
+  <div class="coppy-message">
+  <div class="box">
+    <div class="box-bar">
+    </div>
+    <div class="box-content">
+      <label>
+        <span>Skopiowano wiadamości</span>
+      </label>
+      <button type="submit">Rozumiem</button>
+      <button class="dont-show-again">Nie pokazuj ponownie</button>
+    </div>
+    </div>
+  </div>`;
+
+  div.innerHTML = coppyMess;
+  const coppyBoxMessage = div.querySelector(".coppy-message");
+  const submit = div.querySelector("button[type=submit]");
+  const dontShowAgain = div.querySelector('.dont-show-again')
+
+  submit.addEventListener("click",() => {
+    coppyBoxMessage.remove()
+  })
+  dontShowAgain.addEventListener("click", () => {
+    localStorage.setItem("show", "false")
+    coppyBoxMessage.remove()
+  })
+
+
+document.body.append(coppyBoxMessage);
 }
