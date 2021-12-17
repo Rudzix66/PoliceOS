@@ -1,10 +1,9 @@
-function AlterBox ( o = {} )
-{
+function AlterBox(o = {}) {
   const html = `
   <div class="alert-box">
       <div class="box">
           <div class="box-bar">
-              ${ o.title }
+              ${o.title}
           </div>
           <div class="box-content">
               <label>
