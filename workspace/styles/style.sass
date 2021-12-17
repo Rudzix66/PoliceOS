@@ -55,19 +55,7 @@ button
   user-select: none
 
 .user-info
-  display: flex
-  justify-content: space-between
-  align-items: center
-  min-height: 8vh
-  border-radius: 5px
-  transition: 0.5s
-  min-width: 15vw
-  padding: 5px 7px
   border-bottom: #333333 2px solid
-
-.user-info:hover
-  background-color: #0e38a8
-  border-radius: 10px
 
 // DOM elements
 
@@ -161,6 +149,14 @@ button
             transform: scale(1.05)
           &:not(:last-child)
             margin-bottom: 12px
+      .user-info
+        display: flex
+        justify-content: space-between
+        align-items: center
+        min-height: 8vh
+        border-radius: 5px
+        transition: 1s
+        min-width: 15vw
         
         span
           &:last-child
@@ -168,6 +164,10 @@ button
             text-align: right
         &:first-child
           margin-bottom: 12px
+
+      .user-info:hover
+        background-color: #0e38a8
+        border-radius: 10px
 
     .main-view
       display: flex
