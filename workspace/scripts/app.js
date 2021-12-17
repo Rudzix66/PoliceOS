@@ -1,6 +1,5 @@
 ( function ()
 {
-  const alertBox = document.querySelector( ".alert-box" );
   const userName = document.querySelector( "#user-name" );
   const userStatus = document.querySelector( "#user-status" );
   const localUser = localStorage.getItem( "user" );
