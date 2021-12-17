@@ -1,38 +1,30 @@
-( function ()
-{
-  const userName = document.querySelector( "#user-name" );
-  const userStatus = document.querySelector( "#user-status" );
-  const localUser = localStorage.getItem( "user" );
-  const userData = document.querySelector( ".user-data" );
-  const editUserInfo = document.querySelector( ".edit-user-info" );
+(function () {
+  const userName = document.querySelector("#user-name");
+  const userStatus = document.querySelector("#user-status");
+  const localUser = localStorage.getItem("user");
+  const userData = document.querySelector(".user-data");
+  const editUserInfo = document.querySelector(".edit-user-info");
 
-  if ( localUser )
-  {
-    const userData = JSON.parse( localUser );
+  if (localUser) {
+    const userData = JSON.parse(localUser);
     userName.textContent = userData.name;
     userStatus.textContent = userData.status;
-  } else
-  {
+  } else {
     indexAlertBox();
   }
 
-  editUserInfo.addEventListener( "click", () =>
-  {
+  editUserInfo.addEventListener("click", () => {
     indexAlertBox();
-  } );
+  });
 
-  userData.addEventListener( "click", () =>
-  {
-    const copied = `Funkcjonariusz: ${ userName.textContent.trim() } Stopień: ${ userStatus.textContent.trim() }`;
-    navigator.clipboard.writeText( copied )
-    alert( copied );
-  } )
+  userData.addEventListener("click", () => {
+    const copied = `Funkcjonariusz: ${userName.textContent.trim()} Stopień: ${userStatus.textContent.trim()}`;
+    navigator.clipboard.writeText(copied);
+  });
+})();
 
-} )();
-
-function indexAlertBox ()
-{
-  const div = document.createElement( "div" );
+function indexAlertBox() {
+  const div = document.createElement("div");
   const html = `
   <div class="alert-box">
     <div class="box">
@@ -53,21 +45,19 @@ function indexAlertBox ()
   </div>
   `;
   div.innerHTML = html;
-  const alertBox = div.querySelector( ".alert-box" );
-  const inputName = div.querySelector( "input[data-name=name]" );
-  const inputStatus = div.querySelector( "input[data-name=status]" );
-  const submit = div.querySelector( "button[type=submit]" );
-  const userName = document.querySelector( "#user-name" );
-  const userStatus = document.querySelector( "#user-status" );
+  const alertBox = div.querySelector(".alert-box");
+  const inputName = div.querySelector("input[data-name=name]");
+  const inputStatus = div.querySelector("input[data-name=status]");
+  const submit = div.querySelector("button[type=submit]");
+  const userName = document.querySelector("#user-name");
+  const userStatus = document.querySelector("#user-status");
 
-  [ inputName, inputStatus ].forEach( ( input ) =>
-  {
-    input.addEventListener( "keyup", debounce( alertInputEvent ) );
-    input.addEventListener( "change", debounce( alertInputEvent ) );
-  } );
+  [inputName, inputStatus].forEach((input) => {
+    input.addEventListener("keyup", debounce(alertInputEvent));
+    input.addEventListener("change", debounce(alertInputEvent));
+  });
 
-  submit.addEventListener( "click", function ()
-  {
+  submit.addEventListener("click", function () {
     const nameVal = inputName.value.trim();
     const statusVal = inputStatus.value.trim();
 
@@ -76,24 +66,21 @@ function indexAlertBox ()
 
     localStorage.setItem(
       "user",
-      JSON.stringify( { name: nameVal, status: statusVal } )
+      JSON.stringify({ name: nameVal, status: statusVal })
     );
 
     alertBox.remove();
-  } );
+  });
 
-  document.body.append( alertBox );
+  document.body.append(alertBox);
 
-  function alertInputEvent ()
-  {
-    const isEmpty = [ inputName, inputStatus ].every( ( el ) => el.value.trim() );
+  function alertInputEvent() {
+    const isEmpty = [inputName, inputStatus].every((el) => el.value.trim());
 
-    if ( !isEmpty )
-    {
-      submit.classList.add( "disabled" );
-    } else
-    {
-      submit.classList.remove( "disabled" );
+    if (!isEmpty) {
+      submit.classList.add("disabled");
+    } else {
+      submit.classList.remove("disabled");
     }
   }
 }

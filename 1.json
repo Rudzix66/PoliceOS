@@ -4,6 +4,7 @@
         "fullName": "Kuba Dąbrowa",
         "age": 22,
         "warrant": ["Składanie fałszywych zeznań"],
-        "citations": []
+        "citations": [],
+        "notes" []
     }
 }
