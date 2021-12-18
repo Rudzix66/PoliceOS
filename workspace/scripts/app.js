@@ -21,11 +21,8 @@
   userData.addEventListener("click", () => {
     const copied = `Funkcjonariusz: ${userName.textContent.trim()} Stopień: ${userStatus.textContent.trim()}`;
     navigator.clipboard.writeText(copied);
-    if(localStorage.getItem("show") === "false") {
-      return
-    } else{
-      indexCoppyMessage()
-    }
+    
+    indexCoppyMessage()
   });
 
   search.addEventListener("change", debounce(searchPearson(search.value)))
@@ -106,26 +103,17 @@ function indexCoppyMessage() {
     <div class="box-bar">
     </div>
     <div class="box-content">
-      <span>Skopiowano wiadamości</span>
-      <button type="submit">Rozumiem</button>
-      <button class="dont-show-again">Nie pokazuj ponownie</button>
-    </div>
+      <span>Skopiowano dane</span>
+      </div>
     </div>
   </div>`;
 
   div.innerHTML = coppyMess;
   const coppyBoxMessage = div.querySelector(".coppy-message");
-  const submit = div.querySelector("button[type=submit]");
-  const dontShowAgain = div.querySelector('.dont-show-again')
 
-  submit.addEventListener("click",() => {
+  setTimeout(() => {
     coppyBoxMessage.remove()
-  })
-  dontShowAgain.addEventListener("click", () => {
-    localStorage.setItem("show", "false")
-    coppyBoxMessage.remove()
-  })
+  }, 3000);
 
-
-document.body.append(coppyBoxMessage);
+  document.body.append(coppyBoxMessage);
 }
