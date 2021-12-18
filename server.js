@@ -19,7 +19,7 @@ app.get( "/", ( req, res ) =>
 
 app.get( "/views/html", ( req, res ) =>
 {
-  res.render( "test.html" )
+  res.render( "./html/test" )
 } );
 
 app.post( "/user", ( req, res ) =>
