@@ -4,6 +4,7 @@
   const localUser = localStorage.getItem("user");
   const userData = document.querySelector(".user-data");
   const editUserInfo = document.querySelector(".edit-user-info");
+  const search = document.querySelector('#search');
 
   if (localUser) {
     const userData = JSON.parse(localUser);
@@ -20,13 +21,20 @@
   userData.addEventListener("click", () => {
     const copied = `Funkcjonariusz: ${userName.textContent.trim()} Stopień: ${userStatus.textContent.trim()}`;
     navigator.clipboard.writeText(copied);
-    if(localStorage.getItem("show" === "false")) {
-
+    if(localStorage.getItem("show") === "false") {
+      // return
     } else{
       indexCoppyMessage()
     }
   });
+
+  search.addEventListener("change", debounce(searchPearson(search.value)))
+
 })();
+
+function searchPearson(input) {
+  console.log(input.value);
+}
 
 function indexAlertBox() {
   const div = document.createElement("div");
@@ -98,9 +106,7 @@ function indexCoppyMessage() {
     <div class="box-bar">
     </div>
     <div class="box-content">
-      <label>
-        <span>Skopiowano wiadamości</span>
-      </label>
+      <span>Skopiowano wiadamości</span>
       <button type="submit">Rozumiem</button>
       <button class="dont-show-again">Nie pokazuj ponownie</button>
     </div>

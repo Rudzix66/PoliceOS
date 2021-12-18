@@ -63,7 +63,6 @@ button
   transform: scale(0.75)
   box-shadow: 8px 8px 8px transparentize(black,.75 )
   transition: .5s ease-in-out background-color,.5s ease-in-out transform
-  margin: 0
   &:hover
     background-color: #333
     transform: scale(.9)
@@ -150,23 +149,21 @@ button
     .box-content
       display: flex
       flex-direction: column
-      label
-        display: flex
-        justify-content: space-between
-        align-items: flex-end
-        &:first-child
-          margin-bottom: 12px
+      span
+        text-align: center
+        font-size: 20px
       button
-        margin-top: 24px
+        margin: 12px auto
         padding: 6px 14px
-        color: white
+        color: #fff
         border-radius: 8px
-        background-color: $primary
-        align-self: center
-        transition: .3s ease-in-out background-color
-        float: left
+        background-color: #135dd8
+        transition: .3s ease-in-out background-color, .3s ease-in-out transform
+        width: 270px
         &:hover
           background-color: lighten($primary, 10%)
+          transform: scale(1.05)
+
     
 #root
   display: flex
