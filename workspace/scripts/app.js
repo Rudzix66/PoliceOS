@@ -22,7 +22,7 @@
     const copied = `Funkcjonariusz: ${userName.textContent.trim()} Stopień: ${userStatus.textContent.trim()}`;
     navigator.clipboard.writeText(copied);
     if(localStorage.getItem("show") === "false") {
-      // return
+      return
     } else{
       indexCoppyMessage()
     }
