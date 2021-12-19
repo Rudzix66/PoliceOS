@@ -20,6 +20,24 @@ const query = {
         console.log( "done!" )
       }
     } )
+  },
+  select: function ( query, params = [] )
+  {
+    if ( params instanceof Array !== true )
+      params = [ params ];
+    let data = null;
+    db.all( query, params, ( err, rows ) =>
+    {
+      if ( err )
+      {
+        console.log( err );
+        return null;
+      } else
+      {
+        return data = rows;
+      }
+    } );
+    return data;
   }
 };
 const tables = {
@@ -33,7 +51,5 @@ const tables = {
     added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );`
 };
-query.run( "DROP TABLE users;" );
-query.run( tables.users );
-query.run( `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES ("Wojciech","Wojtyczka","Wojciech Wojtyczka",21,"2000-12-12");` );
-module.exports = { db };
+
+module.exports = { db, query, tables };

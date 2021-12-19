@@ -1,11 +1,10 @@
 const express = require( "express" );
 const sqlite3 = require( "./db" );
 const db = sqlite3.db;
+// const query = sqlite3.query;
+const tables = sqlite3.tables;
 const app = express();
 const port = 3000;
-
-let name = "Kuba";
-let rank = "SII";
 
 app.use( express.urlencoded( { extended: true } ) )
 app.set( "view engine", "ejs" );
@@ -23,9 +22,20 @@ app.get( "/views/html", ( req, res ) =>
   res.render( "./html/test" )
 } );
 
-app.post( "/user", ( req, res ) =>
+app.get( "/users/:id", async ( req, res ) =>
 {
-  console.log( '--> user' );
-  res.send( JSON.parse( `{"name": "${ name }", "rank": "${ rank }"}` ) )
+  const id = parseInt( req.params.id );
+  const query = "SELECT * FROM users WHERE id = ?";
+  db.all( query, [ id ], ( err, row ) =>
+  {
+    if ( err )
+    {
+      console.log( err )
+    } else
+    {
+      res.send( JSON.stringify( row ) );
+    }
+  } );
 } );
-app.listen( port )
+
+app.listen( port );
