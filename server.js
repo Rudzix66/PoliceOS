@@ -1,5 +1,6 @@
 const express = require( "express" );
-
+const sqlite3 = require( "./db" );
+const db = sqlite3.db;
 const app = express();
 const port = 3000;
 

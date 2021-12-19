@@ -122,30 +122,12 @@ function indexCoppyMessage ()
   </div>`;
 
   div.innerHTML = coppyMess;
-<<<<<<< HEAD
   const coppyBoxMessage = div.querySelector( ".coppy-message" );
-  const submit = div.querySelector( "button[type=submit]" );
-  const dontShowAgain = div.querySelector( '.dont-show-again' )
 
-  submit.addEventListener( "click", () =>
+  setTimeout( () =>
   {
     coppyBoxMessage.remove()
-  } )
-  dontShowAgain.addEventListener( "click", () =>
-  {
-    localStorage.setItem( "show", "false" )
-    coppyBoxMessage.remove()
-  } )
-
+  }, 3000 );
 
   document.body.append( coppyBoxMessage );
-=======
-  const coppyBoxMessage = div.querySelector(".coppy-message");
-
-  setTimeout(() => {
-    coppyBoxMessage.remove()
-  }, 3000);
-
-  document.body.append(coppyBoxMessage);
->>>>>>> de56af421b091cdf5506d5382788c90df31ef743
 }
