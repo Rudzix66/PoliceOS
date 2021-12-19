@@ -35,5 +35,5 @@ const tables = {
 };
 query.run( "DROP TABLE users;" );
 query.run( tables.users );
-query.run( `INSERT INTO users (first_name,lsat_name,fullname,age,birth_date,added_date) VALUES ("Wojciech","Wojtyczka","Wojciech Wojtyczka",21,"2000-25-04");` );
+query.run( `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES ("Wojciech","Wojtyczka","Wojciech Wojtyczka",21,"2000-12-12");` );
 module.exports = { db };
