@@ -8,24 +8,10 @@ const db = new sqlite3.Database( 'DataBase.db', sqlite3.OPEN_READWRITE, ( err ) 
   console.log( 'Connected to the SQlite database.' );
 } );
 const query = {
-  run: function ( query )
-  {
-    db.run( query, ( err ) =>
-    {
-      if ( err )
-      {
-        console.log( err )
-      } else
-      {
-        console.log( "done!" )
-      }
-    } )
-  },
-  select: function ( query, params = [] )
+  select: async function select ( query, params = [] )
   {
     if ( params instanceof Array !== true )
       params = [ params ];
-    let data = null;
     db.all( query, params, ( err, rows ) =>
     {
       if ( err )
@@ -37,9 +23,15 @@ const query = {
         return data = rows;
       }
     } );
-    return data;
   }
 };
+async function start ()
+{
+  return await query.select( "SELECT * FROM users;", [] );
+}
+const result = start();
+
+console.log( result );
 const tables = {
   users: `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
