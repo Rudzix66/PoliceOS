@@ -116,18 +116,17 @@ function indexCoppyMessage ()
     <div class="box-bar">
     </div>
     <div class="box-content">
-      <span>Skopiowano dane</span>
+      <span><strong>Skopiowano dane</strong></span>
       </div>
     </div>
   </div>`;
 
   div.innerHTML = coppyMess;
-  const coppyBoxMessage = div.querySelector( ".coppy-message" );
+  const coppyBoxMessage = div.querySelector(".coppy-message");
 
-  setTimeout( () =>
-  {
+  setTimeout(() => {
     coppyBoxMessage.remove()
-  }, 3000 );
+  }, 3000);
 
-  document.body.append( coppyBoxMessage );
+  document.body.append(coppyBoxMessage);
 }
