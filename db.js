@@ -5,27 +5,12 @@ const db = new sqlite3.Database( 'DataBase.db', sqlite3.OPEN_READWRITE, ( err ) 
   {
     return console.error( err.message );
   }
-  console.log( 'Connected to the SQlite database.' );
 } );
 const query = {
-  run: function ( query )
-  {
-    db.run( query, ( err ) =>
-    {
-      if ( err )
-      {
-        console.log( err )
-      } else
-      {
-        console.log( "done!" )
-      }
-    } )
-  },
-  select: function ( query, params = [] )
+  select: function select ( query, params = [] )
   {
     if ( params instanceof Array !== true )
       params = [ params ];
-    let data = null;
     db.all( query, params, ( err, rows ) =>
     {
       if ( err )
@@ -37,9 +22,11 @@ const query = {
         return data = rows;
       }
     } );
-    return data;
   }
 };
+const queries = {
+  addUser: `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES ("test","test","test",4,"1900-5-5")`
+}
 const tables = {
   users: `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,5 +38,6 @@ const tables = {
     added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );`
 };
+
 
 module.exports = { db, query, tables };
