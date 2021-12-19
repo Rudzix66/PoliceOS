@@ -116,30 +116,12 @@ function indexCoppyMessage ()
     <div class="box-bar">
     </div>
     <div class="box-content">
-      <span>Skopiowano dane</span>
+      <span><strong>Skopiowano dane</strong></span>
       </div>
     </div>
   </div>`;
 
   div.innerHTML = coppyMess;
-<<<<<<< HEAD
-  const coppyBoxMessage = div.querySelector( ".coppy-message" );
-  const submit = div.querySelector( "button[type=submit]" );
-  const dontShowAgain = div.querySelector( '.dont-show-again' )
-
-  submit.addEventListener( "click", () =>
-  {
-    coppyBoxMessage.remove()
-  } )
-  dontShowAgain.addEventListener( "click", () =>
-  {
-    localStorage.setItem( "show", "false" )
-    coppyBoxMessage.remove()
-  } )
-
-
-  document.body.append( coppyBoxMessage );
-=======
   const coppyBoxMessage = div.querySelector(".coppy-message");
 
   setTimeout(() => {
@@ -147,5 +129,4 @@ function indexCoppyMessage ()
   }, 3000);
 
   document.body.append(coppyBoxMessage);
->>>>>>> de56af421b091cdf5506d5382788c90df31ef743
 }
