@@ -30,7 +30,9 @@
     indexCoppyMessage()
   } );
 
-  search.addEventListener( "change", debounce( searchPearson( search.value ) ) )
+  search.addEventListener( "keyup", debounce( () => { 
+    searchPearson( search )
+  }))
 
 } )();
 
