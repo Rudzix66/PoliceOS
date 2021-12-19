@@ -1,7 +1,7 @@
 const express = require( "express" );
 const sqlite3 = require( "./db" );
 const db = sqlite3.db;
-// const query = sqlite3.query;
+const query = sqlite3.query;
 const tables = sqlite3.tables;
 const app = express();
 const port = 3000;
@@ -25,8 +25,8 @@ app.get( "/views/html", ( req, res ) =>
 app.get( "/users/:id", async ( req, res ) =>
 {
   const id = parseInt( req.params.id );
-  const query = "SELECT * FROM users WHERE id = ?";
-  db.all( query, [ id ], ( err, row ) =>
+  const query2 = "SELECT * FROM users WHERE id = ?";
+  db.all( query2, [ id ], ( err, row ) =>
   {
     if ( err )
     {
@@ -36,6 +36,7 @@ app.get( "/users/:id", async ( req, res ) =>
       res.send( JSON.stringify( row ) );
     }
   } );
+  console.log( query.select( "SELECT * FROM users;", [] ) )
 } );
 
 app.listen( port );

@@ -5,10 +5,9 @@ const db = new sqlite3.Database( 'DataBase.db', sqlite3.OPEN_READWRITE, ( err ) 
   {
     return console.error( err.message );
   }
-  console.log( 'Connected to the SQlite database.' );
 } );
 const query = {
-  select: async function select ( query, params = [] )
+  select: function select ( query, params = [] )
   {
     if ( params instanceof Array !== true )
       params = [ params ];
@@ -25,13 +24,9 @@ const query = {
     } );
   }
 };
-async function start ()
-{
-  return await query.select( "SELECT * FROM users;", [] );
+const queries = {
+  addUser: `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES ("test","test","test",4,"1900-5-5")`
 }
-const result = start();
-
-console.log( result );
 const tables = {
   users: `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,5 +38,6 @@ const tables = {
     added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );`
 };
+
 
 module.exports = { db, query, tables };
