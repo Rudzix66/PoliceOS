@@ -25,7 +25,7 @@ const query = {
   }
 };
 const queries = {
-  userAdd: `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES (?,?,?,?,?)`,
+  userAdd: `INSERT INTO users (first_name,last_name,fullname,birth_date) VALUES (?,?,?,?);`,
 }
 const tables = {
   users: `CREATE TABLE IF NOT EXISTS users (
@@ -33,9 +33,12 @@ const tables = {
     first_name TEXT,
     last_name TEXT,
     fullname TEXT,
-    age INT,
     birth_date TIMESTAMP,
     added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );`,
+  fines: `CREATE TABLE IF NOT EXISTS fines (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT
   );`
 };
 
