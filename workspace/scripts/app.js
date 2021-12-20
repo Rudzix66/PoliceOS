@@ -30,13 +30,16 @@
     indexCoppyMessage()
   } );
 
-  search.addEventListener( "change", debounce( searchPearson( search.value ) ) )
+  search.addEventListener( "change", debounce( e =>
+  {
+    searchPearson.call( search )
+  } ) )
 
 } )();
 
-function searchPearson ( input )
+function searchPearson ()
 {
-  console.log( input.value );
+  console.log( this.value );
 }
 
 function indexAlertBox ()
@@ -122,11 +125,12 @@ function indexCoppyMessage ()
   </div>`;
 
   div.innerHTML = coppyMess;
-  const coppyBoxMessage = div.querySelector(".coppy-message");
+  const coppyBoxMessage = div.querySelector( ".coppy-message" );
 
-  setTimeout(() => {
+  setTimeout( () =>
+  {
     coppyBoxMessage.remove()
-  }, 3000);
+  }, 3000 );
 
-  document.body.append(coppyBoxMessage);
+  document.body.append( coppyBoxMessage );
 }

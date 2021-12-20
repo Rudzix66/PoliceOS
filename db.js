@@ -25,7 +25,7 @@ const query = {
   }
 };
 const queries = {
-  addUser: `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES ("test","test","test",4,"1900-5-5")`
+  userAdd: `INSERT INTO users (first_name,last_name,fullname,age,birth_date) VALUES (?,?,?,?,?)`,
 }
 const tables = {
   users: `CREATE TABLE IF NOT EXISTS users (
@@ -39,5 +39,4 @@ const tables = {
   );`
 };
 
-
-module.exports = { db, query, tables };
+module.exports = { db, query, tables, queries };
