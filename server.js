@@ -1,9 +1,10 @@
 const express = require( "express" );
 const sqlite3 = require( "./db" );
 const db = sqlite3.db;
-// const query = sqlite3.query;
 const queries = sqlite3.queries;
-// const tables = sqlite3.tables;
+const tables = sqlite3.tables;
+const toJSON = sqlite3.toJSON;
+const code = { 400: { code: 400 }, 200: { code: 200 } };
 const app = express();
 const port = 3000;
 
@@ -21,36 +22,39 @@ app.get( "/", ( req, res ) =>
 app.get( "/users/:id", ( req, res ) =>
 {
   const id = parseInt( req.params.id );
-  let select = "SELECT * FROM users WHERE id = ?;";
-  let data = [ id ];
   if ( req.params.id === "*" )
   {
-    select = "SELECT * FROM users;";
-    data = [];
-  }
-  console.log( select )
-  db.all( select, data, ( err, row ) =>
+    db.all( "SELECT * FROM users;", [], ( err, rows ) =>
+    {
+      if ( rows )
+      {
+        const response = code[ "200" ];
+        response.data = rows;
+        return res.send( toJSON( response ) );
+      }
+      return res.send( toJSON( code[ "400" ] ) );
+    } );
+  } else
   {
-    if ( err )
+    db.get( "SELECT * FROM users WHERE id = ?;", [ id ], ( err, row ) =>
     {
-      res.send( JSON.stringify( { code: 400 } ) );
-
-    } else
-    {
-      res.send( JSON.stringify( row ) );
-    }
-  } );
+      if ( row )
+      {
+        const response = code[ "200" ];
+        response.data = row;
+        return res.send( toJSON( response ) );
+      }
+      return res.send( toJSON( code[ "400" ] ) );
+    } );
+  }
 } );
 
 app.post( "/users", ( req, res ) =>
 {
-  const wrong = JSON.stringify( {
-    code: 400
-  } );
   const data = req.body;
   const action = data.action;
   if ( !action )
-    return res.send( wrong );
+    return res.send( toJSON( code[ "400" ] ) );
 
   if ( action === "add" )
   {
@@ -60,24 +64,23 @@ app.post( "/users", ( req, res ) =>
     let birth_date = data.birth_date.trim();
     const date = new Date( birth_date );
     if ( !first_name || !last_name || !birth_date || isNaN( date.getTime() ) )
-      return res.send( wrong );
+      return res.send( toJSON( code[ "400" ] ) );
     const year = date.getFullYear();
     const month = date.getMonth() + 1 < 10 ? `0${ date.getMonth() + 1 }` : date.getMonth;
     const day = date.getDate() < 10 ? `0${ date.getDate() }` : date.getDate();
     birth_date = `${ year }-${ month }-${ day }`;
-    db.run( queries.userAdd, [ first_name, last_name, fullname, birth_date ], err =>
+    db.run( queries.userAdd, [ first_name, last_name, fullname, birth_date ], function ( err )
     {
       if ( err )
       {
-        return res.send( wrong );
+        return res.send( toJSON( code[ "400" ] ) );
       } else
       {
-        return res.send( JSON.stringify( {
-          code: 200
-        } ) );
+        const response = code[ "200" ];
+        response.id = this.lastID;
+        return res.send( toJSON( response ) );
       }
     } )
-
   } else if ( action === "update" )
   {
     const id = parseInt( data.id );
@@ -85,38 +88,37 @@ app.post( "/users", ( req, res ) =>
     const value = data.value.trim();
     const available = [ "first_name", "last_name", "birth_date" ]
     if ( ( !id || !name || !value ) || ( !available.indexOf( value ) ) )
-      return res.send( wrong );
-    db.run( `UPDATE users SET ${ name } = ? WHERE id = ?`, [ value, id ], err =>
+      return res.send( toJSON( code[ "400" ] ) );
+    db.run( `UPDATE users SET ${ name } = ? WHERE id = ?`, [ value, id ], function ( err )
     {
       if ( err )
       {
-        return res.send( wrong );
+        return res.send( toJSON( code[ "400" ] ) );
       } else
       {
         if ( name === "first_name" || name === "last_name" )
         {
-          db.all( `SELECT first_name,last_name FROM users WHERE id = ? LIMIT 1;`, [ id ], ( err, row ) =>
+          db.get( `SELECT first_name,last_name FROM users WHERE id = ?;`, [ id ], function ( err, row )
           {
+            console.log( row )
             if ( row )
             {
-              row = row[ 0 ];
               const name = `${ row.first_name } ${ row.last_name }`;
-              console.log( name )
-              db.run( `UPDATE users SET fullname = ? WHERE id = ?`, [ name, id ], err =>
+              db.run( `UPDATE users SET fullname = ? WHERE id = ?`, [ name, id ], function ( err ) 
               {
                 if ( err )
                 {
-                  return res.send( wrong );
+                  return res.send( toJSON( code[ "400" ] ) );
                 } else
                 {
-                  return res.send( JSON.stringify( {
-                    code: 200
-                  } ) );
+                  const response = code[ "200" ];
+                  response.changes = this.changes;
+                  return res.send( toJSON( response ) );
                 }
               } );
             } else
             {
-              return res.send( wrong );
+              return res.send( toJSON( code[ "400" ] ) );
             }
           } );
         } else
@@ -131,18 +133,18 @@ app.post( "/users", ( req, res ) =>
   {
     const id = parseInt( data.id );
     if ( !id )
-      return res.send( wrong );
-    db.run( "DELETE FROM users WHERE id = ?;", [ id ], err =>
+      return res.send( toJSON( code[ "400" ] ) );
+    db.run( "DELETE FROM users WHERE id = ?;", [ id ], function ( err )
     {
       if ( err )
       {
-        return res.send( wrong );
+        return res.send( toJSON( code[ "400" ] ) );
 
       } else
       {
-        return res.send( JSON.stringify( {
-          code: 200
-        } ) );
+        const response = code[ "200" ];
+        response.changes = this.changes;
+        return res.send( toJSON( response ) );
       }
     } );
   }

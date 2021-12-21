@@ -1,45 +1,50 @@
 const sqlite3 = require( "sqlite3" ).verbose();
-const db = new sqlite3.Database( 'DataBase.db', sqlite3.OPEN_READWRITE, ( err ) =>
+const db = new sqlite3.Database( "./DataBase.db", sqlite3.OPEN_READWRITE, err =>
 {
   if ( err )
   {
     return console.error( err.message );
   }
+  console.log( "Connected to database" )
 } );
-const query = {
-  select: function select ( query, params = [] )
-  {
-    if ( params instanceof Array !== true )
-      params = [ params ];
-    db.all( query, params, ( err, rows ) =>
-    {
-      if ( err )
-      {
-        console.log( err );
-        return null;
-      } else
-      {
-        return data = rows;
-      }
-    } );
-  }
-};
+
 const queries = {
   userAdd: `INSERT INTO users (first_name,last_name,fullname,birth_date) VALUES (?,?,?,?);`,
 }
 const tables = {
-  users: `CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+  users: `
     first_name TEXT,
     last_name TEXT,
     fullname TEXT,
     birth_date TIMESTAMP,
     added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  );`,
-  fines: `CREATE TABLE IF NOT EXISTS fines (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    `,
+  fines: `
     username TEXT
-  );`
+    reason TEXT,
+    description TEXT,
+    "from" TIMESTAMP,
+    "to" TIMESTAMP
+    `,
+  finesReasons: `
+    name TEXT
+    `,
+  arrest: `
+  username TEXT
+  reason TEXT,
+  description TEXT,
+  "from" TIMESTAMP,
+  "to" TIMESTAMP
+  `,
+  arrestReasons: `
+    name TEXT
+  `
 };
 
-module.exports = { db, query, tables, queries };
+function toJSON ( object = {}, lines = 2 )
+{
+  return JSON.stringify( object, null, lines );
+}
+
+module.exports = { db, tables, queries, toJSON };
+
