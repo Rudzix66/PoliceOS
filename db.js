@@ -45,6 +45,5 @@ function toJSON ( object = {}, lines = 2 )
 {
   return JSON.stringify( object, null, lines );
 }
-
 module.exports = { db, tables, queries, toJSON };
 

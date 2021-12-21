@@ -241,9 +241,25 @@ button
         .wrapper:not(.active)
           display: none
         .wrapper[view=users]
-          display: grid
-          grid-gap: 24px 16px
-          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+          height: 100%
+          width: 100%
+          &.grid
+            display: grid
+            grid-gap: 24px 16px
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+            grid-template-rows: min-content
+          &.empty
+            display: flex
+            justify-content: center
+            align-items: center
+            .empty
+              font-size: 24px
+              max-width: 250px
+              padding: 36px
+              background-color: transparentize(#222,.5 )
+              transition: .3s ease-in-out background-color
+              &:hover
+                background-color: transparentize(#222,.25 )
           .name
             display: flex
             justify-content: center

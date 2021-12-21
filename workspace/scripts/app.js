@@ -36,13 +36,24 @@
     {
       if ( data.code === 200 )
       {
-        createUsersSelector( search.value.trim(), data.data )
+        createUsersSelector( search.value.trim().toLowerCase(), data.data );
       } else
       {
-        createUsersSelector( search.value.trim(), [] )
+        createUsersSelector( search.value.trim().toLowerCase(), [] );
       }
     } );
   }, 600 ) )
+
+  get( "/users/*", "json" ).then( data =>
+  {
+    if ( data.code === 200 )
+    {
+      createUsersSelector( search.value.trim().toLowerCase(), data.data );
+    } else
+    {
+      createUsersSelector( search.value.trim().toLowerCase(), [] );
+    }
+  } );
 
 } )();
 
@@ -51,6 +62,8 @@ function createUsersSelector ( value, users = [] )
   const content = document.querySelector( ".main-view .content" );
   const usersView = content.querySelector( ".wrapper[view=users]" );
   usersView.classList.add( "active" );
+  usersView.classList.remove( "grid" );
+  usersView.classList.remove( "empty" );
   while ( usersView.firstElementChild )
   {
     usersView.firstElementChild.remove();
@@ -58,10 +71,11 @@ function createUsersSelector ( value, users = [] )
 
   if ( users.length )
   {
+    usersView.classList.add( "grid" );
     let filter = users;
     if ( value )
     {
-      filter = filter.filter( user => user.fullname.includes( value ) );
+      filter = filter.filter( user => user.fullname.toLowerCase().includes( value ) );
     }
     for ( const user of filter )
     {
@@ -70,6 +84,11 @@ function createUsersSelector ( value, users = [] )
       const html = `<div class="name" data-id="${ id }">${ fullname }</div>`;
       usersView.insertAdjacentHTML( "beforeend", html );
     }
+  } else
+  {
+    usersView.classList.add( "empty" );
+    const html = `<div class="empty">Nie znaleziono użytkowników</div>`;
+    usersView.insertAdjacentHTML( "beforeend", html );
   }
 }
 function indexAlertBox ()
