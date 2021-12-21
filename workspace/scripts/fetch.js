@@ -9,11 +9,10 @@ function URLParams ( object = {} )
   return params;
 }
 
-const get = ( url, object = {}, type = null ) =>
+const get = ( url, type = null ) =>
 {
   return fetch( url, {
     method: "GET",
-    body: URLParams( object )
   } ).then( e =>
   {
     switch ( type )

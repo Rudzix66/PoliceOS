@@ -32,16 +32,46 @@
 
   search.addEventListener( "keyup", debounce( () =>
   {
-    searchPearson( search )
-  } ) )
+    get( "/users/*", "json" ).then( data =>
+    {
+      if ( data.code === 200 )
+      {
+        createUsersSelector( search.value.trim(), data.data )
+      } else
+      {
+        createUsersSelector( search.value.trim(), [] )
+      }
+    } );
+  }, 600 ) )
 
 } )();
 
-function searchPearson ()
+function createUsersSelector ( value, users = [] )
 {
-  console.log( this.value );
-}
+  const content = document.querySelector( ".main-view .content" );
+  const usersView = content.querySelector( ".wrapper[view=users]" );
+  usersView.classList.add( "active" );
+  while ( usersView.firstElementChild )
+  {
+    usersView.firstElementChild.remove();
+  }
 
+  if ( users.length )
+  {
+    let filter = users;
+    if ( value )
+    {
+      filter = filter.filter( user => user.fullname.includes( value ) );
+    }
+    for ( const user of filter )
+    {
+      const id = user.id;
+      const fullname = user.fullname;
+      const html = `<div class="name" data-id="${ id }">${ fullname }</div>`;
+      usersView.insertAdjacentHTML( "beforeend", html );
+    }
+  }
+}
 function indexAlertBox ()
 {
   const div = document.createElement( "div" );

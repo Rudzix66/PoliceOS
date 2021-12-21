@@ -151,7 +151,6 @@ button
         text-align: center
         font-size: 20px
 
-    
 #root
   display: flex
   flex-direction: column
@@ -202,7 +201,7 @@ button
         transition: 1s
         min-width: 15vw
         padding: 5px
-        
+
         span
           &:last-child
             margin-left: 8px
@@ -233,8 +232,27 @@ button
           border-radius: 8px
           font-size: 16px
           +inputAutofill(transparentize(black,.25 ) )
-
       .content
         height: 0%
         flex-grow: 1
         overflow-y: auto
+        .wrapper
+          padding: 0px 24px
+        .wrapper:not(.active)
+          display: none
+        .wrapper[view=users]
+          display: grid
+          grid-gap: 24px 16px
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+          .name
+            display: flex
+            justify-content: center
+            align-items: center
+            text-align: center
+            width: 100%
+            padding: 36px 12px
+            background-color: transparentize(#222,.5 )
+            cursor: pointer
+            transition: .3s ease-in-out background-color
+            &:hover
+              background-color: transparentize(#222,.25 )
