@@ -53,23 +53,26 @@ button
   display: flex
   flex-direction: column
   user-select: none
-
-.edit-user-info
+.edit-user-info-wrapper
   display: flex
-  background-color: transparentize(#333,.1 )
-  color: transparentize(white,.25 )
-  border-radius: 8px
-  padding: 8px
-  box-shadow: 8px 8px 8px transparentize(black,.75 )
-  transition: .5s ease-in-out background-color,.5s ease-in-out transform
-  transform-origin: center
-  font-size: 22px
-  margin-bottom: 4px
-  &:hover
-    background-color: #333
-    transform: scale(1.2)
-.user-info
-  border-bottom: #333333 2px solid
+  justify-content: flex-end
+  .edit-user-info
+    display: flex
+    justify-content: flex-end
+    background-color: transparentize(#333,.1 )
+    color: transparentize(white,.25 )
+    border-radius: 8px
+    padding: 8px
+    box-shadow: 8px 8px 8px transparentize(black,.75 )
+    transition: .3s ease-in-out background-color,.3s ease-in-out transform
+    transform-origin: center
+    font-size: 22px
+    margin-bottom: 4px
+    &:hover
+      background-color: #333
+      transform: scale(1.2)
+  .user-info
+    border-bottom: #333333 2px solid
 
 // DOM elements
 
