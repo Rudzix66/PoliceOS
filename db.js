@@ -20,30 +20,50 @@ const tables = {
     added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     `,
   fines: `
-    username TEXT
+    userId INT,
+    username TEXT,
     reason TEXT,
     description TEXT,
     "from" TIMESTAMP,
     "to" TIMESTAMP
     `,
   finesReasons: `
+    userId INT,
     name TEXT
     `,
   arrest: `
-  username TEXT
+  userId INT,
+  username TEXT,
   reason TEXT,
   description TEXT,
   "from" TIMESTAMP,
   "to" TIMESTAMP
   `,
   arrestReasons: `
+    userId INT,
     name TEXT
   `
 };
+function createAllTables ( tablename, query )
+{
+  query = `CREATE TABLE IF NOT EXISTS ${ tablename } (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ${ query });`
+  db.run( query, [], err =>
+  {
+    if ( err )
+      return console.error( `Tabela ${ tablename } nie została stworzona` );
+    return console.error( `Tabela ${ tablename } została stworzona` );
 
+  } );
+}
 function toJSON ( object = {}, lines = 2 )
 {
   return JSON.stringify( object, null, lines );
 }
+// for ( const table in tables )
+// {
+//   createAllTables( table, tables[ table ] );
+// }
 module.exports = { db, tables, queries, toJSON };
 

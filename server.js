@@ -24,15 +24,39 @@ app.get( "/users/:id", ( req, res ) =>
   const id = parseInt( req.params.id );
   if ( req.params.id === "*" )
   {
-    db.all( "SELECT * FROM users;", [], ( err, rows ) =>
+    db.all( "SELECT * FROM users;", [], function ( err, rows ) 
     {
       if ( rows )
       {
         const response = code[ "200" ];
         response.data = rows;
-        return res.send( toJSON( response ) );
+        for ( let i = 0; i < rows.length; i++ )
+        {
+          const row = rows[ i ];
+          db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          {
+            console.log( 123 )
+            if ( err )
+              row.arrest = 0;
+            else
+              row.arrest = result.length;
+          } );
+          db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          {
+            console.log( 123 )
+            if ( err )
+              row.arrest = 0;
+            else
+              row.arrest = result.length;
+            if ( i === rows.length - 1 )
+              return res.send( toJSON( response ) );
+          } );
+        }
       }
-      return res.send( toJSON( code[ "400" ] ) );
+      else
+      {
+        return res.send( toJSON( code[ "400" ] ) );
+      }
     } );
   } else
   {
