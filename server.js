@@ -35,7 +35,6 @@ app.get( "/users/:id", ( req, res ) =>
           const row = rows[ i ];
           db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
           {
-            console.log( 123 )
             if ( err )
               row.arrest = 0;
             else
@@ -43,7 +42,6 @@ app.get( "/users/:id", ( req, res ) =>
           } );
           db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
           {
-            console.log( 123 )
             if ( err )
               row.arrest = 0;
             else
@@ -66,9 +64,25 @@ app.get( "/users/:id", ( req, res ) =>
       {
         const response = code[ "200" ];
         response.data = row;
-        return res.send( toJSON( response ) );
+        db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+        {
+          if ( err )
+            row.arrest = 0;
+          else
+            row.arrest = result.length;
+        } );
+        db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+        {
+          if ( err )
+            row.arrest = 0;
+          else
+            row.arrest = result.length;
+          return res.send( toJSON( response ) );
+        } );
+      } else
+      {
+        return res.send( toJSON( code[ "400" ] ) );
       }
-      return res.send( toJSON( code[ "400" ] ) );
     } );
   }
 } );
