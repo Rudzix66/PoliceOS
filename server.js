@@ -74,9 +74,9 @@ app.get( "/users/:id", ( req, res ) =>
         db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
         {
           if ( err )
-            row.arrest = 0;
+            row.fines = 0;
           else
-            row.arrest = result.length;
+            row.fines = result.length;
           return res.send( toJSON( response ) );
         } );
       } else
