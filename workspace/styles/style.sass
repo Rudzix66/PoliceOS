@@ -55,20 +55,18 @@ button
   user-select: none
 
 .edit-user-info
-  text-align: right
   background-color: transparentize(#333,.1 )
   color: transparentize(white,.25 )
-  border-radius: 60%
+  border-radius: 8px
   padding: 8px
-  transform: scale(0.75)
   box-shadow: 8px 8px 8px transparentize(black,.75 )
   transition: .5s ease-in-out background-color,.5s ease-in-out transform
+  transform-origin: center
+  font-size: 22px
+  margin-bottom: 4px
   &:hover
     background-color: #333
-    transform: scale(.9)
-    margin-bottom: 2px
-    border-radius: 40%
-
+    transform: scale(1.2)
 .user-info
   border-bottom: #333333 2px solid
 

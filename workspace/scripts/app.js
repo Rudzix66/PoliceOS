@@ -176,10 +176,28 @@ function indexCoppyMessage ()
   div.innerHTML = coppyMess;
   const coppyBoxMessage = div.querySelector( ".coppy-message" );
 
-  setTimeout( () =>
-  {
-    coppyBoxMessage.remove()
-  }, 3000 );
-
-  document.body.append( coppyBoxMessage );
+  anime( {
+    targets: coppyBoxMessage,
+    duration: 600,
+    opacity: [ 0, 1 ],
+    easing: "linear",
+    begin: () =>
+    {
+      document.body.append( coppyBoxMessage );
+    },
+    complete: function ()
+    {
+      anime( {
+        targets: coppyBoxMessage,
+        opacity: [ 1, 0 ],
+        duration: 600,
+        delay: 2000,
+        complete: () =>
+        {
+          coppyBoxMessage.remove()
+        },
+        easing: "linear"
+      } )
+    }
+  } )
 }
