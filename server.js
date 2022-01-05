@@ -30,26 +30,41 @@ app.get( "/users/:id", ( req, res ) =>
       {
         const response = code[ "200" ];
         response.data = rows;
+        const promises = [];
         for ( let i = 0; i < rows.length; i++ )
         {
           const row = rows[ i ];
-          db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          const fines = new Promise( ( res, rej ) =>
           {
-            if ( err )
-              row.fines = 0;
-            else
-              row.fines = result.length;
+            db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+            {
+              if ( err )
+                row.fines = 0;
+              else
+                row.fines = result.length;
+              res();
+            } );
           } );
-          db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          const arrest = new Promise( ( res, rej ) =>
           {
-            if ( err )
-              row.arrest = 0;
-            else
-              row.arrest = result.length;
-            if ( i === rows.length - 1 )
-              return res.send( toJSON( response ) );
+            db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+            {
+              if ( err )
+                row.arrest = 0;
+              else
+                row.arrest = result.length;
+              if ( i === rows.length - 1 )
+                console.log( null )
+              res();
+            } );
           } );
+          promises.push( fines, arrest )
         }
+        Promise.all( promises ).then( () =>
+        {
+          return res.send( toJSON( response ) )
+        } )
+
       }
       else
       {

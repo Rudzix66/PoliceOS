@@ -46,6 +46,7 @@
 
   get( "/users/*", "json" ).then( data =>
   {
+    console.log( data )
     if ( data.code === 200 )
     {
       createUsersSelector( search.value.trim().toLowerCase(), data.data );
@@ -85,7 +86,7 @@ function createUsersSelector ( value, users = [] )
       <div class="name col" data-id="${ id }">
         <p>${ fullname }</p>
         <div class="row" style="background-color: #333333e6; padding: 8px; letter-spacing: 3px;">
-          <i class="icons mandate-icon">Receipt_long</i>:${user.fines}
+          <i class="icons mandate-icon">Receipt_long</i>:${ user.fines }
         </div>
       </div>`;
       usersView.insertAdjacentHTML( "beforeend", html );
@@ -153,7 +154,7 @@ function indexAlertBox ()
 
   function alertInputEvent ()
   {
-    console.log(submit);
+    console.log( submit );
     const isEmpty = [ inputName, inputStatus ].every( ( el ) => el.value.trim() );
 
     if ( !isEmpty )
