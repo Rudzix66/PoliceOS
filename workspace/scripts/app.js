@@ -61,9 +61,9 @@ function createUsersSelector ( value, users = [] )
 {
   const content = document.querySelector( ".main-view .content" );
   const usersView = content.querySelector( ".wrapper[view=users]" );
-  usersView.classList.add( "active" );
-  usersView.classList.remove( "grid" );
-  usersView.classList.remove( "empty" );
+
+  u( usersView ).addClass( "active" ).removeClass( "grid empty" );
+
   while ( usersView.firstElementChild )
   {
     usersView.firstElementChild.remove();
