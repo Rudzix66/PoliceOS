@@ -81,7 +81,13 @@ function createUsersSelector ( value, users = [] )
     {
       const id = user.id;
       const fullname = user.fullname;
-      const html = `<div class="name" data-id="${ id }">${ fullname }</div>`;
+      const html = `
+      <div class="name col" data-id="${ id }">
+        <p>${ fullname }</p>
+        <div class="row" style="background-color: #333333e6; padding: 8px; letter-spacing: 3px;">
+          <i class="icons mandate-icon">Receipt_long</i>:${user.fines}
+        </div>
+      </div>`;
       usersView.insertAdjacentHTML( "beforeend", html );
     }
   } else
@@ -108,7 +114,7 @@ function indexAlertBox ()
           <span>Wpisz stopień:</span>
           <input data-name="status" type="text" autocomplete="status">
         </label>
-        <button type="submit">Zapisz</button>
+        <button class="disabled" type="submit">Zapisz</button>
       </div>
     </div>
   </div>
@@ -147,6 +153,7 @@ function indexAlertBox ()
 
   function alertInputEvent ()
   {
+    console.log(submit);
     const isEmpty = [ inputName, inputStatus ].every( ( el ) => el.value.trim() );
 
     if ( !isEmpty )
