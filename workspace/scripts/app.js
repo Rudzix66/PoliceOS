@@ -114,7 +114,7 @@ function indexAlertBox ()
           <span>Wpisz stopień:</span>
           <input data-name="status" type="text" autocomplete="status">
         </label>
-        <button type="submit">Zapisz</button>
+        <button class="disabled" type="submit">Zapisz</button>
       </div>
     </div>
   </div>
@@ -153,6 +153,7 @@ function indexAlertBox ()
 
   function alertInputEvent ()
   {
+    console.log(submit);
     const isEmpty = [ inputName, inputStatus ].every( ( el ) => el.value.trim() );
 
     if ( !isEmpty )
