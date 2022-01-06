@@ -114,6 +114,7 @@ app.post( "/users", ( req, res ) =>
     const first_name = data.first_name.trim();
     const last_name = data.last_name.trim();
     const fullname = `${ first_name } ${ last_name }`;
+    console.log( data.status )
     const status = data.status.trim();
     let birth_date = data.birth_date.trim();
     const date = new Date( birth_date );

@@ -63,19 +63,16 @@ function createUsersSelector ( value, users = [] )
   const content = document.querySelector( ".main-view .content" );
   const usersView = content.querySelector( ".wrapper[view=users]" );
 
-  const html = `
-  <div class="name col" data-id="1">
-    <p>Add</p>
-  </div>`;
-  usersView.insertAdjacentHTML( "beforeend", html );
+  // const html = `
+  // <div class="name col" data-id="1">
+  //   <p>Add</p>
+  // </div>`;
+  // usersView.insertAdjacentHTML( "beforeend", html );
 
 
   u( usersView ).addClass( "active" ).removeClass( "grid empty" );
 
-  while ( usersView.firstElementChild )
-  {
-    usersView.firstElementChild.remove();
-  }
+  u( usersView ).find( ".name[data-id]" ).remove();
 
   if ( users.length )
   {
@@ -101,19 +98,11 @@ function createUsersSelector ( value, users = [] )
     }
   } else
   {
-    usersView.classList.add( "empty" );
-    const html = `<div class="empty">Nie znaleziono użytkowników</div>`;
-    usersView.insertAdjacentHTML( "beforeend", html );
+    // usersView.classList.add( "empty" );
+    // const html = `<div class="empty">Nie znaleziono użytkowników</div>`;
+    // usersView.insertAdjacentHTML( "beforeend", html );
   }
 }
-
-
-
-
-
-
-
-
 
 function indexAlertBox ()
 {
