@@ -43,7 +43,10 @@ const tables = {
   arrestReasons: `
     userId INT,
     name TEXT
-  `
+  `,
+  notes: `
+  description TEXT,
+  name TEXT`
 };
 function createAllTables ( tablename, query )
 {
