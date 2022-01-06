@@ -114,15 +114,16 @@ app.post( "/users", ( req, res ) =>
     const first_name = data.first_name.trim();
     const last_name = data.last_name.trim();
     const fullname = `${ first_name } ${ last_name }`;
+    const status = data.status.trim();
     let birth_date = data.birth_date.trim();
     const date = new Date( birth_date );
-    if ( !first_name || !last_name || !birth_date || isNaN( date.getTime() ) )
+    if ( !first_name || !last_name || !status || !birth_date || isNaN( date.getTime() ) )
       return res.send( toJSON( code[ "400" ] ) );
     const year = date.getFullYear();
     const month = date.getMonth() + 1 < 10 ? `0${ date.getMonth() + 1 }` : date.getMonth;
     const day = date.getDate() < 10 ? `0${ date.getDate() }` : date.getDate();
     birth_date = `${ year }-${ month }-${ day }`;
-    db.run( queries.userAdd, [ first_name, last_name, fullname, birth_date ], function ( err )
+    db.run( queries.userAdd, [ first_name, last_name, status, fullname, birth_date ], function ( err )
     {
       if ( err )
       {
@@ -139,8 +140,20 @@ app.post( "/users", ( req, res ) =>
     const id = parseInt( data.id );
     const name = data.name.trim();
     const value = data.value.trim();
-    const available = [ "first_name", "last_name", "birth_date" ]
-    if ( ( !id || !name || !value ) || ( !available.indexOf( value ) ) )
+    const available = [ "first_name", "last_name", "birth_date", "status" ];
+    let check = true;
+    for ( const item in [ id, name, value ] )
+    {
+      if ( !item )
+      {
+        res.send( toJSON( code[ "400" ] ) );
+        check = false;
+        break;
+      }
+    }
+    if ( !check )
+      return;
+    if ( !available.indexOf( value ) )
       return res.send( toJSON( code[ "400" ] ) );
     db.run( `UPDATE users SET ${ name } = ? WHERE id = ?`, [ value, id ], function ( err )
     {
@@ -203,4 +216,4 @@ app.post( "/users", ( req, res ) =>
   }
 } );
 
-app.listen(port);
+app.listen( port );

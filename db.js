@@ -16,6 +16,7 @@ const tables = {
     first_name TEXT,
     last_name TEXT,
     fullname TEXT,
+    status TEXT,
     birth_date TIMESTAMP,
     // added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP <--- chyba niepotrzebne
     `,
