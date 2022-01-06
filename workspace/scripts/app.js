@@ -32,21 +32,33 @@
 
   search.addEventListener( "keyup", debounce( () =>
   {
-    get( "/users/*", "json" ).then( data =>
+    const content = u( ".main-view .content" );
+    const usersView = content.find( ".wrapper[view=users]" );
+    const users = u( usersView ).find( ".name[data-id]" );
+    const lookingFor = search.value.trim().toLowerCase();
+
+    users.each( user =>
     {
-      if ( data.code === 200 )
+      const userU = u( user );
+      const fullname = userU.find( ".fullname" ).text();
+      if ( !lookingFor )
+        userU.removeClass( "hidden" );
+      else
       {
-        createUsersSelector( search.value.trim().toLowerCase(), data.data );
-      } else
-      {
-        createUsersSelector( search.value.trim().toLowerCase(), [] );
+        if ( fullname.toLowerCase().includes( lookingFor ) )
+        {
+          userU.removeClass( "hidden" );
+        } else
+        {
+          userU.addClass( "hidden" );
+
+        }
       }
-    } );
+    } )
   }, 600 ) )
 
   get( "/users/*", "json" ).then( data =>
   {
-    console.log( data )
     if ( data.code === 200 )
     {
       createUsersSelector( search.value.trim().toLowerCase(), data.data );
@@ -81,7 +93,7 @@ function createUsersSelector ( value, users = [] )
       const fullname = user.fullname;
       const html = `
       <div class="name col" data-id="${ id }">
-        <p>${ fullname }</p>
+        <p class="fullname">${ fullname }</p>
         <div class="row" style="background-color: #333333e6; padding: 8px; letter-spacing: 3px;">
           <i class="icons mandate-icon">Receipt_long</i>:${ user.fines } | 
           <i class="icons material-icons-outlined">gavel</i>:${ user.arrest }
