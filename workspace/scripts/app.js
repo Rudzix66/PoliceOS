@@ -63,6 +63,13 @@ function createUsersSelector ( value, users = [] )
   const content = document.querySelector( ".main-view .content" );
   const usersView = content.querySelector( ".wrapper[view=users]" );
 
+  const html = `
+  <div class="name col" data-id="1">
+    <p>Add</p>
+  </div>`;
+  usersView.insertAdjacentHTML( "beforeend", html );
+
+
   u( usersView ).addClass( "active" ).removeClass( "grid empty" );
 
   while ( usersView.firstElementChild )
@@ -88,7 +95,7 @@ function createUsersSelector ( value, users = [] )
         <div class="row" style="background-color: #333333e6; padding: 8px; letter-spacing: 3px;">
           <i class="icons mandate-icon">Receipt_long</i>:${ user.fines } | 
           <i class="icons material-icons-outlined">gavel</i>:${ user.arrest }
-          </div>
+        </div>
       </div>`;
       usersView.insertAdjacentHTML( "beforeend", html );
     }
@@ -99,6 +106,15 @@ function createUsersSelector ( value, users = [] )
     usersView.insertAdjacentHTML( "beforeend", html );
   }
 }
+
+
+
+
+
+
+
+
+
 function indexAlertBox ()
 {
   const div = document.createElement( "div" );
