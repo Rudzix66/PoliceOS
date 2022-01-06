@@ -6,6 +6,7 @@
   const userData = document.querySelector( ".user-data" );
   const editUserInfo = document.querySelector( ".edit-user-info" );
   const search = document.querySelector( '#search' );
+  const addPearson = document.querySelector(".add")
 
   if ( localUser )
   {
@@ -67,6 +68,10 @@
       createUsersSelector( search.value.trim().toLowerCase(), [] );
     }
   } );
+
+  addPearson.addEventListener("click" , () => {
+    alert("poprawny")
+  })
 
 } )();
 
