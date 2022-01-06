@@ -17,7 +17,7 @@ const tables = {
     last_name TEXT,
     fullname TEXT,
     birth_date TIMESTAMP,
-    added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    // added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP <--- chyba niepotrzebne
     `,
   fines: `
     userId INT,
@@ -25,7 +25,7 @@ const tables = {
     reason TEXT,
     description TEXT,
     "from" TIMESTAMP,
-    "to" TIMESTAMP
+    // "to" TIMESTAMP <--- chyba niepotrzebne
     `,
   finesReasons: `
     userId INT,
