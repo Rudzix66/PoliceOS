@@ -128,6 +128,19 @@ function indexAlertBox ()
   const submit = div.querySelector( "button[type=submit]" );
   const userName = document.querySelector( "#user-name" );
   const userStatus = document.querySelector( "#user-status" );
+  const hide = {
+    targets: alertBox,
+    duration: 300,
+    opacity: [ 1, 0 ],
+    easing: "linear",
+    complete: () =>
+    {
+      alertBox.remove();
+    }
+  };
+  const show = { ...hide };
+  show.opacity = [ 0, 1 ];
+  show.complete = null;
 
   [ inputName, inputStatus ].forEach( ( input ) =>
   {
@@ -148,10 +161,18 @@ function indexAlertBox ()
       JSON.stringify( { name: nameVal, status: statusVal } )
     );
 
-    alertBox.remove();
+    anime( hide );
   } );
 
+  u( alertBox ).on( "click", function ( e )
+  {
+    if ( e.target === e.currentTarget )
+      anime( hide );
+  } )
+
   document.body.append( alertBox );
+
+  anime( show );
 
   function alertInputEvent ()
   {
