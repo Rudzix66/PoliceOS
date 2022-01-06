@@ -63,13 +63,6 @@ function createUsersSelector ( value, users = [] )
   const content = document.querySelector( ".main-view .content" );
   const usersView = content.querySelector( ".wrapper[view=users]" );
 
-  // const html = `
-  // <div class="name col" data-id="1">
-  //   <p>Add</p>
-  // </div>`;
-  // usersView.insertAdjacentHTML( "beforeend", html );
-
-
   u( usersView ).addClass( "active" ).removeClass( "grid empty" );
 
   u( usersView ).find( ".name[data-id]" ).remove();
@@ -96,11 +89,6 @@ function createUsersSelector ( value, users = [] )
       </div>`;
       usersView.insertAdjacentHTML( "beforeend", html );
     }
-  } else
-  {
-    // usersView.classList.add( "empty" );
-    // const html = `<div class="empty">Nie znaleziono użytkowników</div>`;
-    // usersView.insertAdjacentHTML( "beforeend", html );
   }
 }
 
