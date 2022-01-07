@@ -186,12 +186,13 @@ function loadUsers ()
 function back ()
 {
   const mainView = u( ".main-view" );
-  const userView = mainView.find( ".wrapper[data-view=users]" );
+  const userView = mainView.find( ".wrapper[view=users]" );
   const wrappers = mainView.find( ".wrapper" );
   const nav = u( ".nav-btn" );
 
   wrappers.removeClass( "active" );
   userView.addClass( "active" );
+  console.log( userView )
   nav.removeClass( "active" );
 }
 function checkUserWrapper ( id )
