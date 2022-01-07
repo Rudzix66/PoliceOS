@@ -8,6 +8,14 @@ const code = { 400: { code: 400 }, 200: { code: 200 } };
 const app = express();
 const port = 3000;
 
+function response ( code = 400, message = "" )
+{
+  return toJSON( {
+    code,
+    message
+  } );
+}
+
 app.use( express.urlencoded( { extended: true } ) )
 app.set( "view engine", "ejs" );
 app.use( express.static( __dirname + "/views" ) );
@@ -114,21 +122,21 @@ app.post( "/users", ( req, res ) =>
     const first_name = data.first_name.trim();
     const last_name = data.last_name.trim();
     const fullname = `${ first_name } ${ last_name }`;
-    console.log( data.status )
     const status = data.status.trim();
     let birth_date = data.birth_date.trim();
+    console.log( { first_name, last_name, fullname, status, birth_date } )
     const date = new Date( birth_date );
     if ( !first_name || !last_name || !status || !birth_date || isNaN( date.getTime() ) )
-      return res.send( toJSON( code[ "400" ] ) );
+      return res.send( response( 400, "błędne dane" ) );
     const year = date.getFullYear();
     const month = date.getMonth() + 1 < 10 ? `0${ date.getMonth() + 1 }` : date.getMonth;
     const day = date.getDate() < 10 ? `0${ date.getDate() }` : date.getDate();
     birth_date = `${ year }-${ month }-${ day }`;
-    db.run( queries.userAdd, [ first_name, last_name, status, fullname, birth_date ], function ( err )
+    db.run( queries.userAdd, [ first_name, last_name, fullname, status, birth_date ], function ( err )
     {
       if ( err )
       {
-        return res.send( toJSON( code[ "400" ] ) );
+        return res.send( response( 400, "baza danych" ) );
       } else
       {
         const response = code[ "200" ];

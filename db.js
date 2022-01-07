@@ -9,7 +9,7 @@ const db = new sqlite3.Database( "./DataBase.db", sqlite3.OPEN_READWRITE, err =>
 } );
 
 const queries = {
-  userAdd: `INSERT INTO users (first_name,last_name,fullname,birth_date) VALUES (?,?,?,?);`,
+  userAdd: `INSERT INTO users (first_name,last_name,fullname,status,birth_date) VALUES (?,?,?,?,?);`,
 }
 const tables = {
   users: `
@@ -68,6 +68,7 @@ function toJSON ( object = {}, lines = 2 )
 {
   return JSON.stringify( object, null, lines );
 }
+
 // for ( const table in tables )
 // {
 //   createAllTables( table, tables[ table ] );

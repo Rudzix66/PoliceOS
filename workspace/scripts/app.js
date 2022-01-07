@@ -87,7 +87,7 @@
           </label>
           <label>
             <span>Wybierz datę urodzenia:</span>
-            <input type="date" name="age" id="age">
+            <input type="date" name="birth_date" id="birth_date">
           </label>
         </div>
         <button type="submit">Dodaj</button>
@@ -95,6 +95,9 @@
     </div>
     `;
     const element = u( html );
+    const first_name = element.find( "#first_name" ).first();
+    const last_name = element.find( "#last_name" ).first();
+    const birth_date = element.find( "#birth_date" ).first();
     const options = {
       targets: element.nodes,
       duration: 300,
@@ -123,6 +126,39 @@
           }
         } )
       }
+    } );
+
+    element.find( "button[type=submit]" ).on( "click", function ()
+    {
+      const params = {
+        action: "add",
+        first_name: first_name.value,
+        status: "undefined",
+        last_name: last_name.value,
+        birth_date: birth_date.value,
+      };
+      console.log( params )
+      element.remove();
+      post( "/users", params ).then( data =>
+      {
+        if ( data.code === 200 )
+        {
+          get( "/users/*", "json" ).then( data =>
+          {
+            if ( data.code === 200 )
+            {
+              createUsersSelector( search.value.trim().toLowerCase(), data.data );
+            } else
+            {
+              createUsersSelector( search.value.trim().toLowerCase(), [] );
+            }
+          } );
+        } else
+        {
+          console.log( "użytkownik nie został stworzony" )
+        }
+      }
+      )
     } );
 
   } )
