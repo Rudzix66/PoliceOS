@@ -66,7 +66,20 @@ app.get( "/users/:id", ( req, res ) =>
               res();
             } );
           } );
-          promises.push( fines, arrest )
+          const notes = new Promise( ( res, rej ) =>
+          {
+            db.all( "SELECT * FROM notes WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+            {
+              if ( err )
+                row.notes = 0;
+              else
+                row.notes = result.length;
+              if ( i === rows.length - 1 )
+                console.log( null )
+              res();
+            } );
+          } );
+          promises.push( fines, arrest, notes )
         }
         Promise.all( promises ).then( () =>
         {
