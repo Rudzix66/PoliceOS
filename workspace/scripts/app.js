@@ -183,6 +183,18 @@ function loadUsers ()
     }
   } );
 }
+function back ()
+{
+  const mainView = u( ".main-view" );
+  const userView = mainView.find( ".wrapper[view=users]" );
+  const wrappers = mainView.find( ".wrapper" );
+  const nav = u( ".nav-btn" );
+
+  wrappers.removeClass( "active" );
+  userView.addClass( "active" );
+  console.log( userView )
+  nav.removeClass( "active" );
+}
 function checkUserWrapper ( id )
 {
   id = parseInt( id );
@@ -191,11 +203,13 @@ function checkUserWrapper ( id )
   const wrappers = mainView.find( ".wrapper" );
   const userWrapper = mainView.find( `.user-wrapper[data-id='${ id }']` );
   const length = userWrapper.nodes.length;
+  const nav = u( ".nav-btn" );
   console.log( id )
   if ( length )
   {
     wrappers.removeClass( "active" );
     userWrapper.addClass( "active" );
+    u( nav.first() ).trigger( "click" );
   } else
   {
     createUserWrapper( id )
