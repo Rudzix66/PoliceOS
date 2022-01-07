@@ -10,9 +10,9 @@
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector( ".add" )
   const nav = u( ".nav-btn" );
-  const backArrow = document.querySelector('.back-arrow')
+  const backArrow = u( '.back-arrow' )
 
-  backArrow.addEventListener( "click", back)
+  backArrow.on( "click", back )
 
   nav.on( "click", function ()
   {
@@ -220,10 +220,11 @@ function checkUserWrapper ( id )
 }
 function createUserWrapper ( id = 1 )
 {
-  backArrow.removeClass("hide")
+
   if ( !id )
     return;
 
+  const backArrow = u( '.back-arrow' )
   const nav = u( u( ".nav-btn" ).first() );
   const mainView = u( ".main-view" );
   const content = mainView.find( ".content" );
@@ -239,6 +240,7 @@ function createUserWrapper ( id = 1 )
       return u( "<div>" ).addClass( className );
     }, [ "fines", "arrest", "notes" ] );
 
+  backArrow.removeClass( "hide" )
   wrappers.removeClass( "active" );
   wrapper.addClass( "active" );
   content.append( wrapper );
