@@ -10,6 +10,9 @@
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector( ".add" )
   const nav = u( ".nav-btn" );
+  const backArrow = document.querySelector('.back-arrow')
+
+  backArrow.addEventListener( "click", back)
 
   nav.on( "click", function ()
   {
@@ -217,6 +220,7 @@ function checkUserWrapper ( id )
 }
 function createUserWrapper ( id = 1 )
 {
+  backArrow.removeClass("hide")
   if ( !id )
     return;
 
