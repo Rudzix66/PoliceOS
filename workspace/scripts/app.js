@@ -5,9 +5,10 @@
   const localUser = localStorage.getItem( "user" );
   const userData = document.querySelector( ".user-data" );
   const editUserInfo = document.querySelector( ".edit-user-info" );
-  const content = document.querySelector(".content");
+  const mainView = document.querySelector( ".main-view" );
+  const content = mainView.querySelector( ".content" );
   const search = document.querySelector( '#search' );
-  const addPearson = document.querySelector(".add")
+  const addPearson = document.querySelector( ".add" )
 
   if ( localUser )
   {
@@ -70,16 +71,49 @@
     }
   } );
 
-  addPearson.addEventListener("click" , () => {
+  addPearson.addEventListener( "click", () =>
+  {
     const html = `
-    <div class="add-user-message" style="background-color: white;">
-      <input type="text" name="first_name" id="first_name">
-      <input type="text" name="last_name" id="last_name">
-      <input type="number" name="age" id="age">
+    <div class="add-user-message-wrapper">
+      <div class="add-user-message" style="background-color: white;">
+        <input type="text" name="first_name" id="first_name">
+        <input type="text" name="last_name" id="last_name">
+        <input type="number" name="age" id="age">
+      </div>
     </div>
-    `
-    content.insertAdjacentHTML( "beforeend", html );
-  })
+    `;
+    const element = u( html );
+    const options = {
+      targets: element.nodes,
+      duration: 300,
+      easing: "linear",
+    };
+
+    anime( {
+      ...options,
+      opacity: [ 0, 1 ],
+      begin: () =>
+      {
+        u( mainView ).append( element );
+      }
+    } )
+
+    element.on( "click", e =>
+    {
+      if ( e.target === e.currentTarget )
+      {
+        anime( {
+          ...options,
+          opacity: [ 1, 0 ],
+          complete: () =>
+          {
+            element.remove();
+          }
+        } )
+      }
+    } );
+
+  } )
 
 } )();
 

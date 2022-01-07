@@ -216,6 +216,7 @@ button
         border-radius: 10px
 
     .main-view
+      position: relative
       display: flex
       flex-direction: column
       width: 0%
@@ -237,14 +238,14 @@ button
       .content
         height: 0%
         flex-grow: 1
-        overflow-y: auto
         .wrapper
-          padding: 0px 24px
+          padding: 12px 24px
         .wrapper:not(.active)
           display: none
         .wrapper[view=users]
           height: 100%
           width: 100%
+          overflow-y: auto
           &.grid
             display: grid
             grid-gap: 24px 16px
@@ -281,4 +282,14 @@ button
             &:hover
               transform: scale(1.05)
 
-
+.add-user-message-wrapper
+  display: flex
+  justify-content: center
+  align-items: center
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background-color: transparentize(black,.8 )
+  // .add-user-message
