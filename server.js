@@ -85,7 +85,6 @@ app.get( "/users/:id", ( req, res ) =>
         {
           return res.send( toJSON( response ) )
         } )
-
       }
       else
       {
@@ -100,21 +99,47 @@ app.get( "/users/:id", ( req, res ) =>
       {
         const response = code[ "200" ];
         response.data = row;
-        db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+        const fines = new Promise( ( res, rej ) =>
         {
-          if ( err )
-            row.arrest = 0;
-          else
-            row.arrest = result.length;
+          db.all( "SELECT * FROM fines WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          {
+            if ( err )
+              row.fines = 0;
+            else
+              row.fines = result.length;
+            res();
+          } );
         } );
-        db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+        const arrest = new Promise( ( res, rej ) =>
         {
-          if ( err )
-            row.fines = 0;
-          else
-            row.fines = result.length;
-          return res.send( toJSON( response ) );
+          db.all( "SELECT * FROM arrest WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          {
+            if ( err )
+              row.arrest = 0;
+            else
+              row.arrest = result.length;
+            if ( i === rows.length - 1 )
+              console.log( null )
+            res();
+          } );
         } );
+        const notes = new Promise( ( res, rej ) =>
+        {
+          db.all( "SELECT * FROM notes WHERE userId = ?;", [ parseInt( row.id ) ], function ( err, result )
+          {
+            if ( err )
+              row.notes = 0;
+            else
+              row.notes = result.length;
+            if ( i === rows.length - 1 )
+              console.log( null )
+            res();
+          } );
+        } );
+        Promise.all( promises ).then( () =>
+        {
+          return res.send( toJSON( response ) )
+        } )
       } else
       {
         return res.send( toJSON( code[ "400" ] ) );
