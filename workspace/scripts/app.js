@@ -138,7 +138,14 @@
         birth_date: birth_date.value,
       };
       console.log( params )
-      element.remove();
+      anime( {
+        ...options,
+        opacity: [ 1, 0 ],
+        complete: () =>
+        {
+          element.remove();
+        }
+      } )
       post( "/users", params ).then( data =>
       {
         if ( data.code === 200 )
