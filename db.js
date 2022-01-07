@@ -48,6 +48,7 @@ const tables = {
     name TEXT
   `,
   notes: `
+  userId INT,
   description TEXT,
   name TEXT`
 };
