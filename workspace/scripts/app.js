@@ -238,8 +238,12 @@ function createUserWrapper ( id = 1 )
     } )
     .append( ( className ) =>
     {
+      const html = `
+        Mandaty
+        <hr>
+      `
       className = `box ${ className }`;
-      return u( "<div>" ).addClass( className );
+      return u( "<div>" ).addClass( className ).append(html);
     }, [ "fines", "arrest", "notes" ] );
 
   backArrow.removeClass( "hidden" )
@@ -247,6 +251,9 @@ function createUserWrapper ( id = 1 )
   wrapper.addClass( "active" );
   content.append( wrapper );
   nav.trigger( "click" );
+
+
+
 }
 function createUsersSelector ( value, users = [] )
 {
@@ -273,7 +280,7 @@ function createUsersSelector ( value, users = [] )
       <div class="name col" data-id="${ id }">
         <p class="fullname">${ fullname }</p>
         <div class="row" style="background-color: #333333e6; padding: 8px; letter-spacing: 3px;">
-          <i class="icons mandate-icon">Receipt_long</i>:${ user.fines } | 
+          <i class="icons mandate-icon">Receipt</i>:${ user.fines } | 
           <i class="icons material-icons-outlined">gavel</i>:${ user.arrest }
         </div>
       </div>`)
