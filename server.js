@@ -136,7 +136,7 @@ app.get( "/users/:id", ( req, res ) =>
             res();
           } );
         } );
-        Promise.all( promises ).then( () =>
+        Promise.all( [ fines, notes, arrest ] ).then( () =>
         {
           return res.send( toJSON( response ) )
         } )
@@ -162,7 +162,6 @@ app.post( "/users", ( req, res ) =>
     const fullname = `${ first_name } ${ last_name }`;
     const status = data.status.trim();
     let birth_date = data.birth_date.trim();
-    console.log( { first_name, last_name, fullname, status, birth_date } )
     const date = new Date( birth_date );
     if ( !first_name || !last_name || !status || !birth_date || isNaN( date.getTime() ) )
       return res.send( response( 400, "błędne dane" ) );

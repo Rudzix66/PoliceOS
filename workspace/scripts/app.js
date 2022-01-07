@@ -9,6 +9,23 @@
   const content = mainView.querySelector( ".content" );
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector( ".add" )
+  const nav = u( ".nav-btn" );
+
+  nav.on( "click", function ()
+  {
+    const btn = u( this );
+    const view = btn.data( "view" );
+    const userWrapper = u( ".user-wrapper.active" );
+    const boxes = userWrapper.find( ".box" );
+    const length = userWrapper.nodes.length
+    if ( !length )
+      return;
+
+    nav.removeClass( "active" );
+    btn.addClass( "active" );
+    boxes.removeClass( "active" );
+    userWrapper.find( `.${ view }` ).addClass( "active" );
+  } )
 
   if ( localUser )
   {
@@ -33,7 +50,7 @@
     indexCoppyMessage()
   } );
 
-  search.addEventListener( "keyup", debounce( () =>
+  u( search ).on( "keyup search", debounce( () =>
   {
     const content = u( ".main-view .content" );
     const usersView = content.find( ".wrapper[view=users]" );
@@ -60,16 +77,7 @@
     } )
   }, 300 ) )
 
-  get( "/users/*", "json" ).then( data =>
-  {
-    if ( data.code === 200 )
-    {
-      createUsersSelector( search.value.trim().toLowerCase(), data.data );
-    } else
-    {
-      createUsersSelector( search.value.trim().toLowerCase(), [] );
-    }
-  } );
+  loadUsers();
 
   addPearson.addEventListener( "click", () =>
   {
@@ -150,16 +158,7 @@
       {
         if ( data.code === 200 )
         {
-          get( "/users/*", "json" ).then( data =>
-          {
-            if ( data.code === 200 )
-            {
-              createUsersSelector( search.value.trim().toLowerCase(), data.data );
-            } else
-            {
-              createUsersSelector( search.value.trim().toLowerCase(), [] );
-            }
-          } );
+          loadUsers();
         } else
         {
           console.log( "użytkownik nie został stworzony" )
@@ -171,11 +170,66 @@
   } )
 
 } )();
+function loadUsers ()
+{
+  get( "/users/*", "json" ).then( data =>
+  {
+    if ( data.code === 200 )
+    {
+      createUsersSelector( search.value.trim().toLowerCase(), data.data );
+    } else
+    {
+      createUsersSelector( search.value.trim().toLowerCase(), [] );
+    }
+  } );
+}
+function checkUserWrapper ( id )
+{
+  id = parseInt( id );
+  const btn = this;
+  const mainView = u( ".main-view" );
+  const wrappers = mainView.find( ".wrapper" );
+  const userWrapper = mainView.find( `.user-wrapper[data-id='${ id }']` );
+  const length = userWrapper.nodes.length;
+  console.log( id )
+  if ( length )
+  {
+    wrappers.removeClass( "active" );
+    userWrapper.addClass( "active" );
+  } else
+  {
+    createUserWrapper( id )
+  }
+}
+function createUserWrapper ( id = 1 )
+{
+  if ( !id )
+    return;
 
+  const nav = u( u( ".nav-btn" ).first() );
+  const mainView = u( ".main-view" );
+  const content = mainView.find( ".content" );
+  const wrappers = content.find( ".wrapper" );
+  const wrapper = u( "<div>" )
+    .addClass( "wrapper user-wrapper" )
+    .data( {
+      id
+    } )
+    .append( ( className ) =>
+    {
+      className = `box ${ className }`;
+      return u( "<div>" ).addClass( className );
+    }, [ "fines", "arrest", "notes" ] );
+
+  wrappers.removeClass( "active" );
+  wrapper.addClass( "active" );
+  content.append( wrapper );
+  nav.trigger( "click" );
+}
 function createUsersSelector ( value, users = [] )
 {
-  const content = document.querySelector( ".main-view .content" );
-  const usersView = content.querySelector( ".wrapper[view=users]" );
+  const content = u( ".main-view .content" );
+  const usersView = content.find( ".wrapper[view=users]" );
 
   u( usersView ).addClass( "active" ).removeClass( "grid empty" );
 
@@ -183,7 +237,7 @@ function createUsersSelector ( value, users = [] )
 
   if ( users.length )
   {
-    usersView.classList.add( "grid" );
+    usersView.addClass( "grid" );
     let filter = users;
     if ( value )
     {
@@ -193,16 +247,19 @@ function createUsersSelector ( value, users = [] )
     {
       const id = user.id;
       const fullname = user.fullname;
-      const html = `
+      const html = u( `
       <div class="name col" data-id="${ id }">
         <p class="fullname">${ fullname }</p>
         <div class="row" style="background-color: #333333e6; padding: 8px; letter-spacing: 3px;">
           <i class="icons mandate-icon">Receipt_long</i>:${ user.fines } | 
           <i class="icons material-icons-outlined">gavel</i>:${ user.arrest }
         </div>
-        <!--<span class="user-id"></span>-->
-      </div>`;
-      usersView.insertAdjacentHTML( "beforeend", html );
+      </div>`)
+        .on( "click", () =>
+        {
+          checkUserWrapper( id );
+        } );
+      usersView.append( html );
     }
   }
 }
