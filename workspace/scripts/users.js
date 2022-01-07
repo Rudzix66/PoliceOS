@@ -1,7 +1,7 @@
 // post("/users",{
 //     action: "add",
 //     first_name: "",
-// status: ""
+//     status: "",
 //     last_name: "",
 //     birth_date: ""
 // })
