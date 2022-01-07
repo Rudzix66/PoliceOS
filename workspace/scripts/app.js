@@ -75,10 +75,22 @@
   {
     const html = `
     <div class="add-user-message-wrapper">
-      <div class="add-user-message" style="background-color: white;">
-        <input type="text" name="first_name" id="first_name">
-        <input type="text" name="last_name" id="last_name">
-        <input type="number" name="age" id="age">
+      <div class="add-user-message">
+        <div class="col">
+          <label>
+            <span>Wpisz imię:</span>
+            <input type="text" name="first_name" id="first_name">
+          </label>
+          <label>
+            <span>Wpisz nazwisko:</span>
+            <input type="text" name="last_name" id="last_name">
+          </label>
+          <label>
+            <span>Wybierz datę urodzenia:</span>
+            <input type="date" name="age" id="age">
+          </label>
+        </div>
+        <button type="submit">Dodaj</button>
       </div>
     </div>
     `;
