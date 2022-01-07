@@ -200,6 +200,7 @@ function createUsersSelector ( value, users = [] )
           <i class="icons mandate-icon">Receipt_long</i>:${ user.fines } | 
           <i class="icons material-icons-outlined">gavel</i>:${ user.arrest }
         </div>
+        <!--<span class="user-id"></span>-->
       </div>`;
       usersView.insertAdjacentHTML( "beforeend", html );
     }
