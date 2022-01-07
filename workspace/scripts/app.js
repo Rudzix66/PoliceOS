@@ -192,11 +192,13 @@ function back ()
   const userView = mainView.find( ".wrapper[view=users]" );
   const wrappers = mainView.find( ".wrapper" );
   const nav = u( ".nav-btn" );
+  const backArrow = u( ".back-arrow" );
 
   wrappers.removeClass( "active" );
   userView.addClass( "active" );
   console.log( userView )
   nav.removeClass( "active" );
+  backArrow.addClass( "hidden" );
 }
 function checkUserWrapper ( id )
 {
@@ -240,7 +242,7 @@ function createUserWrapper ( id = 1 )
       return u( "<div>" ).addClass( className );
     }, [ "fines", "arrest", "notes" ] );
 
-  backArrow.removeClass( "hide" )
+  backArrow.removeClass( "hidden" )
   wrappers.removeClass( "active" );
   wrapper.addClass( "active" );
   content.append( wrapper );

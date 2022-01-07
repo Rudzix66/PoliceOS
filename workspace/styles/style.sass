@@ -44,8 +44,10 @@ button
 .disabled
   pointer-events: none
   opacity: .85
-.hide, .hidden, [hidden]
+.hide, [hidden]
   display: none !important
+.hidden
+  visibility: hidden
 .material-icons-round
   text-transform: lowercase !important
 .row
@@ -244,7 +246,6 @@ button
           font-size: 16px
           +inputAutofill(transparentize(black,.25 ) )
         .back-arrow
-          text-align: left
           margin-left: 0
           font-size: 25px
           user-select: none
