@@ -5,6 +5,7 @@
   const localUser = localStorage.getItem( "user" );
   const userData = document.querySelector( ".user-data" );
   const editUserInfo = document.querySelector( ".edit-user-info" );
+  const content = document.querySelector(".content");
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector(".add")
 
@@ -70,7 +71,14 @@
   } );
 
   addPearson.addEventListener("click" , () => {
-    alert("poprawny")
+    const html = `
+    <div class="add-user-message" style="background-color: white;">
+      <input type="text" name="first_name" id="first_name">
+      <input type="text" name="last_name" id="last_name">
+      <input type="number" name="age" id="age">
+    </div>
+    `
+    content.insertAdjacentHTML( "beforeend", html );
   })
 
 } )();
