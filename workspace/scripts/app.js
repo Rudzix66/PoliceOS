@@ -73,7 +73,6 @@
 
   addPearson.addEventListener( "click", () =>
   {
-    const div = document.createElement( "div" );
     const html = `
     <div class="add-user-message-wrapper">
       <div class="add-user-message">
@@ -87,20 +86,14 @@
             <input type="text" name="last_name" id="last_name">
           </label>
           <label>
-            <span>Podaj datę urodzenia:</span>
-            <input type="date" name="age" id="age">
+            <span>Wybierz datę urodzenia:</span>
+            <input type="date" name="birth_date" id="birth_date">
           </label>
         </div>
         <button type="submit">Dodaj</button>
       </div>
     </div>
     `;
-
-    div.innerHTML=html
-    const newFirstName = document.querySelector("#first_name").value.trim();
-    const newLastName = document.querySelector("#last_name").value.trim();
-    const newDateOfBirth = document.querySelector("#age").value;
-
     const element = u( html );
     const first_name = element.find( "#first_name" ).first();
     const last_name = element.find( "#last_name" ).first();
@@ -133,13 +126,6 @@
           }
         } )
       }
-      post("/users",{
-        action: "add",
-        first_name: `${newFirstName}`,
-        status: "",
-        last_name: `${newLastName}`,
-        birth_date: `${newDateOfBirth}`
-    })
     } );
 
     element.find( "button[type=submit]" ).on( "click", function ()
