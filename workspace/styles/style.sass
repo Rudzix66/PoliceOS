@@ -54,9 +54,12 @@ button
   display: flex
   flex-direction: column
   user-select: none
+.jcsb
+  justify-content: space-between
 .edit-user-info-wrapper
   display: flex
-  justify-content: flex-end
+  justify-content: space-between
+  align-items: center
   .edit-user-info
     display: flex
     justify-content: flex-end
@@ -195,6 +198,8 @@ button
             transform: scale(1.05)
           &:not(:last-child)
             margin-bottom: 12px
+          &.active
+            background-color: lighten($primary, 10%)
       .user-info
         display: flex
         justify-content: space-between
@@ -242,7 +247,11 @@ button
         .wrapper
           padding: 12px 24px
         .wrapper:not(.active)
-          display: none
+          display: none !important
+        .user-wrapper
+          height: 100%
+          width: 100%
+          overflow-y: auto
         .wrapper[view=users]
           height: 100%
           width: 100%
