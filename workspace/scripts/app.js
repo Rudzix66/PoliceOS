@@ -236,15 +236,12 @@ function createUserWrapper ( id = 1 )
     .data( {
       id
     } )
-    .append( ( className ) =>
+    .append( ( prop ) =>
     {
-      const html = `
-        Mandaty
-        <hr>
-      `
-      className = `box ${ className }`;
-      return u( "<div>" ).addClass( className ).append(html);
-    }, [ "fines", "arrest", "notes" ] );
+      const header = u( "<h1>" ).text( prop.header ).first();
+      const hr = u( "<hr>" ).first();
+      return u( "<div>" ).addClass( prop.class ).append( [ header, hr ] );
+    }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
   backArrow.removeClass( "hidden" )
   wrappers.removeClass( "active" );
