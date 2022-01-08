@@ -6,13 +6,9 @@
   const userData = document.querySelector( ".user-data" );
   const editUserInfo = document.querySelector( ".edit-user-info" );
   const mainView = document.querySelector( ".main-view" );
-  const content = mainView.querySelector( ".content" );
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector( ".add" )
   const nav = u( ".nav-btn" );
-  const finesBtn = u('.nav-btn[data-view="fines"]')
-  const arrestBtn = u('.nav-btn[data-view="arrest"]')
-  const notesBtn = u('.nav-btn[data-view="notes"]')
 
   const backArrow = u( '.back-arrow' )
 
@@ -24,7 +20,21 @@
     const view = btn.data( "view" );
     const userWrapper = u( ".user-wrapper.active" );
     const boxes = userWrapper.find( ".box" );
-    const length = userWrapper.nodes.length
+    const length = userWrapper.nodes.length;
+    const pathBtn = btn.nodes[0]
+
+    if(pathBtn === `<button class="nav-btn active" data-view="notes">Notatki</button>`) {
+      whichBtn = "notes"
+    }
+
+    if(pathBtn === `<button class="nav-btn active" data-view="arrest">Aresztowania</button>`) {
+      whichBtn = "arrest"
+    }
+
+    if(pathBtn === `<button class="nav-btn active" data-view="fines">Mandaty</button>`) {
+      whichBtn = "fines"
+    }
+
     if ( !length )
       return;
 
@@ -32,9 +42,11 @@
     btn.addClass( "active" );
     boxes.removeClass( "active" );
     userWrapper.find( `.${ view }` ).addClass( "active" );
-
-    console.log(nav.nodes.filter(classes => classes.classList));
   } )
+
+  // const finesBtn = u('.nav-btn[data-view="fines"]')
+  // const arrestBtn = u('.nav-btn[data-view="arrest"]')
+  // const notesBtn = u('.nav-btn[data-view="notes"]')
 
   if ( localUser )
   {
@@ -179,6 +191,9 @@
   } )
 
 } )();
+
+let whichBtn = "fines";
+
 function loadUsers ()
 {
   get( "/users/*", "json" ).then( data =>
@@ -242,13 +257,36 @@ function createUserWrapper ( id = 1 )
     .data( {
       id
     } )
-    .append( ( prop ) =>
-    {
-      const header = u( "<h1>" ).text( prop.header ).first();
-      const hr = u( "<hr>" ).first();
-      const br = u( "</br>" ).first()
-      return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
-    }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
+
+    if(whichBtn === "fines") {
+      wrapper.append( ( prop ) =>
+      {
+        const header = u( "<h1>" ).text( prop.header ).first();
+        const hr = u( "<hr>" ).first();
+        const br = u( "</br>" ).first()
+        return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
+      }, [ { class: "fines", header: "Mandaty" } ] );
+    }
+
+    if(whichBtn === "arrest") {
+      wrapper.append( ( prop ) =>
+      {
+        const header = u( "<h1>" ).text( prop.header ).first();
+        const hr = u( "<hr>" ).first();
+        const br = u( "</br>" ).first()
+        return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
+      }, [ { class: "arrest", header: "Aresztowania" } ]); 
+    }
+
+    if(whichBtn === "notes") {
+      wrapper.append( ( prop ) =>
+      {
+        const header = u( "<h1>" ).text( prop.header ).first();
+        const hr = u( "<hr>" ).first();
+        const br = u( "</br>" ).first()
+        return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
+      }, [ { class: "notes", header: "Notatki" } ] );
+    }
 
   backArrow.removeClass( "hidden" )
   wrappers.removeClass( "active" );
