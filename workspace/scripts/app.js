@@ -10,6 +10,10 @@
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector( ".add" )
   const nav = u( ".nav-btn" );
+  const finesBtn = u('.nav-btn[data-view="fines"]')
+  const arrestBtn = u('.nav-btn[data-view="arrest"]')
+  const notesBtn = u('.nav-btn[data-view="notes"]')
+
   const backArrow = u( '.back-arrow' )
 
   backArrow.on( "click", back )
@@ -28,6 +32,8 @@
     btn.addClass( "active" );
     boxes.removeClass( "active" );
     userWrapper.find( `.${ view }` ).addClass( "active" );
+
+    console.log(nav.nodes.filter(classes => classes.classList));
   } )
 
   if ( localUser )
@@ -240,7 +246,8 @@ function createUserWrapper ( id = 1 )
     {
       const header = u( "<h1>" ).text( prop.header ).first();
       const hr = u( "<hr>" ).first();
-      return u( "<div>" ).addClass( prop.class ).append( [ header, hr ] );
+      const br = u( "</br>" ).first()
+      return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
   backArrow.removeClass( "hidden" )
@@ -248,10 +255,9 @@ function createUserWrapper ( id = 1 )
   wrapper.addClass( "active" );
   content.append( wrapper );
   nav.trigger( "click" );
-
-
-
 }
+
+
 function createUsersSelector ( value, users = [] )
 {
   const content = u( ".main-view .content" );
