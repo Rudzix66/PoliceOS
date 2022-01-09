@@ -1,3 +1,6 @@
+
+let whichBtn = "fines";
+
 ( function ()
 {
   const userName = document.querySelector( "#user-name" );
@@ -191,8 +194,6 @@
   } )
 
 } )();
-
-let whichBtn = "fines";
 
 function loadUsers ()
 {
