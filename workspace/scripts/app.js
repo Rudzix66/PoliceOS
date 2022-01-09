@@ -245,6 +245,7 @@ function createUserWrapper ( id = 1 )
       const header = u( "<h1>" ).text( prop.header ).first();
       const hr = u( "<hr>" ).first();
       const br = u( "</br>" ).first();
+      const wrapper = u( "<div>" ).addClass( "wrapper" ).first(); //Nazwij to tutaj inacze niż wrapper
       return u( "<div>" ).addClass( className ).append( [ header, hr, br, wrapper ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
