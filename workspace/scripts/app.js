@@ -251,6 +251,34 @@ function createUserWrapper ( id = 1 )
         <p style="font-size: 20px;">Dodaj</p>
       </div>
       ` ).first(); //Nazwij to tutaj inacze niż wrapper //ok
+
+    add.addEventListener("click", () => {
+      const html = `
+      <div class="add-user-message-wrapper">
+      <div class="add-user-message">
+        <div class="col">
+          <label>
+            <span>Wybierz</span>
+          <label for="reasons"></label>
+            <select id="reasons" name="reasonslist">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+            </select>
+          </label>
+          <label>
+            <span>Dodaj krótki opis</span>
+            <input type="text" name="description">
+          </label>
+        </div>
+        <button type="submit">Dodaj</button>
+      </div>
+    </div>
+    `
+    const element = u( html );
+    u(mainView).append(element)
+    })
       return u( "<div>" ).addClass( className ).append( [ header, hr, br, add ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
