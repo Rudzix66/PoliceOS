@@ -69,7 +69,7 @@ function toJSON ( object = {}, lines = 2 )
 {
   return JSON.stringify( object, null, lines );
 }
-
+// db.all( "INSERT INTO notes (userId,name,description,name) VALUES (3,'test','test','test')" )
 // for ( const table in tables )
 // {
 //   createAllTables( table, tables[ table ] );

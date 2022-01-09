@@ -8,9 +8,21 @@ function URLParams ( object = {} )
   }
   return params;
 }
-
-const get = ( url, type = null ) =>
+var a = 0
+const get = ( url, object = {}, type = null ) =>
 {
+  if ( Object.keys( object ).length )
+  {
+    const params = [];
+    if ( !/\/$/gi.test( url ) )
+      url += "/";
+    url += "?";
+    for ( const key in object )
+    {
+      params.push( `${ key }=${ object[ key ] }` );
+    }
+    url += params.join( "&" );
+  }
   return fetch( url, {
     method: "GET",
   } ).then( e =>

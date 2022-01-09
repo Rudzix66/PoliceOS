@@ -147,7 +147,26 @@ app.get( "/users/:id", ( req, res ) =>
     } );
   }
 } );
+app.get( "/usersInfo", function ( req, res )
+{
+  const name = req.query.name;
+  const id = parseInt( req.query.id );
+  const names = [ "fines", "arrest", "notes" ];
+  if ( !~names.indexOf( name ) )
+    return res.send( toJSON( code[ "400" ] ) );
 
+  db.all( `SELECT * FROM ${ name } WHERE userId = ?;`, [ id ], function ( err, rows )
+  {
+    if ( err )
+    {
+      res.send( toJSON( code[ "400" ] ) )
+    } else
+    {
+      console.log( rows )
+      res.send( toJSON( rows ) );
+    }
+  } );
+} );
 app.post( "/users", ( req, res ) =>
 {
   const data = req.body;
