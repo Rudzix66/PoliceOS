@@ -30,7 +30,6 @@
     userWrapper.find( `.box.${ view }` ).addClass( "active" );
   } )
 
-
   if ( localUser )
   {
     const userData = JSON.parse( localUser );
