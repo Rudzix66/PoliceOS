@@ -1,6 +1,3 @@
-
-let whichBtn = "fines";
-
 ( function ()
 {
   const userName = document.querySelector( "#user-name" );
@@ -12,7 +9,6 @@ let whichBtn = "fines";
   const search = document.querySelector( '#search' );
   const addPearson = document.querySelector( ".add" )
   const nav = u( ".nav-btn" );
-
   const backArrow = u( '.back-arrow' )
 
   backArrow.on( "click", back )
@@ -24,22 +20,6 @@ let whichBtn = "fines";
     const userWrapper = u( ".user-wrapper.active" );
     const boxes = userWrapper.find( ".box" );
     const length = userWrapper.nodes.length;
-    const pathBtn = btn.nodes[ 0 ]
-
-    if ( pathBtn === `<button class="nav-btn active" data-view="notes">Notatki</button>` )
-    {
-      whichBtn = "notes"
-    }
-
-    if ( pathBtn === `<button class="nav-btn active" data-view="arrest">Aresztowania</button>` )
-    {
-      whichBtn = "arrest"
-    }
-
-    if ( pathBtn === `<button class="nav-btn active" data-view="fines">Mandaty</button>` )
-    {
-      whichBtn = "fines"
-    }
 
     if ( !length )
       return;
@@ -47,14 +27,9 @@ let whichBtn = "fines";
     nav.removeClass( "active" );
     btn.addClass( "active" );
     boxes.removeClass( "active" );
-    console.log( boxes )
-    console.log( userWrapper.find( `.box.${ view }` ), `.${ view }` )
-    userWrapper.find( `.${ view }` ).addClass( "active" );
+    userWrapper.find( `.box.${ view }` ).addClass( "active" );
   } )
 
-  // const finesBtn = u('.nav-btn[data-view="fines"]')
-  // const arrestBtn = u('.nav-btn[data-view="arrest"]')
-  // const notesBtn = u('.nav-btn[data-view="notes"]')
 
   if ( localUser )
   {
@@ -231,12 +206,13 @@ function checkUserWrapper ( id )
 {
   id = parseInt( id );
   const btn = this;
+  const backArrow = u( '.back-arrow' )
   const mainView = u( ".main-view" );
   const wrappers = mainView.find( ".wrapper" );
   const userWrapper = mainView.find( `.user-wrapper[data-id='${ id }']` );
   const length = userWrapper.nodes.length;
   const nav = u( ".nav-btn" );
-  console.log( id )
+
   if ( length )
   {
     wrappers.removeClass( "active" );
@@ -246,6 +222,9 @@ function checkUserWrapper ( id )
   {
     createUserWrapper( id )
   }
+
+  backArrow.removeClass( "hidden" );
+
 }
 function createUserWrapper ( id = 1 )
 {
@@ -253,7 +232,6 @@ function createUserWrapper ( id = 1 )
   if ( !id )
     return;
 
-  const backArrow = u( '.back-arrow' )
   const nav = u( u( ".nav-btn" ).first() );
   const mainView = u( ".main-view" );
   const content = mainView.find( ".content" );
@@ -267,41 +245,10 @@ function createUserWrapper ( id = 1 )
       const className = `box ${ prop.class }`;
       const header = u( "<h1>" ).text( prop.header ).first();
       const hr = u( "<hr>" ).first();
-      const br = u( "</br>" ).first()
-      return u( "<div>" ).addClass( className ).append( [ header, hr, br ] );
+      const br = u( "</br>" ).first();
+      return u( "<div>" ).addClass( className ).append( [ header, hr, br, wrapper ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
-  // if(whichBtn === "fines") {
-  //   wrapper.append( ( prop ) =>
-  //   {
-  //     const header = u( "<h1>" ).text( prop.header ).first();
-  //     const hr = u( "<hr>" ).first();
-  //     const br = u( "</br>" ).first()
-  //     return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
-  //   }, [ { class: "fines", header: "Mandaty" } ] );
-  // }
-
-  // if(whichBtn === "arrest") {
-  //   wrapper.append( ( prop ) =>
-  //   {
-  //     const header = u( "<h1>" ).text( prop.header ).first();
-  //     const hr = u( "<hr>" ).first();
-  //     const br = u( "</br>" ).first()
-  //     return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
-  //   }, [ { class: "arrest", header: "Aresztowania" } ]); 
-  // }
-
-  // if(whichBtn === "notes") {
-  //   wrapper.append( ( prop ) =>
-  //   {
-  //     const header = u( "<h1>" ).text( prop.header ).first();
-  //     const hr = u( "<hr>" ).first();
-  //     const br = u( "</br>" ).first()
-  //     return u( "<div>" ).addClass( prop.class ).append( [ header, hr, br ] );
-  //   }, [ { class: "notes", header: "Notatki" } ] );
-  // }
-
-  backArrow.removeClass( "hidden" )
   wrappers.removeClass( "active" );
   wrapper.addClass( "active" );
   content.append( wrapper );
