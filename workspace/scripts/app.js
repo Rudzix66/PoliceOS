@@ -259,7 +259,13 @@ function createUserWrapper ( id = 1 )
         <div class="col">
           <label>
             <span>Wybierz</span>
-            <input type="text" name="first_name" id="first_name">
+          <label for="reasons"></label>
+            <select id="reasons" name="reasonslist">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+            </select>
           </label>
           <label>
             <span>Dodaj krótki opis</span>
