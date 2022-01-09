@@ -245,8 +245,13 @@ function createUserWrapper ( id = 1 )
       const header = u( "<h1>" ).text( prop.header ).first();
       const hr = u( "<hr>" ).first();
       const br = u( "</br>" ).first();
-      const wrapper = u( "<div>" ).addClass( "wrapper" ).first(); //Nazwij to tutaj inacze niż wrapper
-      return u( "<div>" ).addClass( className ).append( [ header, hr, br, wrapper ] );
+      const add = u( `
+      <div class="name col add">
+        <i class="icons" style="font-size: 75px;">add</i>
+        <p style="font-size: 20px;">Dodaj</p>
+      </div>
+      ` ).first(); //Nazwij to tutaj inacze niż wrapper //ok
+      return u( "<div>" ).addClass( className ).append( [ header, hr, br, add ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
   wrappers.removeClass( "active" );
