@@ -22,11 +22,9 @@ const tables = {
     `,
   fines: `
     userId INT,
-    username TEXT,
+    name TEXT,
     reason TEXT,
-    description TEXT,
-    "from" TIMESTAMP,
-    "to" TIMESTAMP
+    description TEXT
     `,
   finesReasons: `
     userId INT,
@@ -37,11 +35,9 @@ const tables = {
   `,
   arrest: `
   userId INT,
-  username TEXT,
+  name TEXT,
   reason TEXT,
-  description TEXT,
-  "from" TIMESTAMP,
-  "to" TIMESTAMP
+  description TEXT
   `,
   arrestReasons: `
     userId INT,
@@ -50,6 +46,7 @@ const tables = {
   notes: `
   userId INT,
   description TEXT,
+  reason TEXT,
   name TEXT`
 };
 function createAllTables ( tablename, query )
@@ -68,6 +65,33 @@ function createAllTables ( tablename, query )
 function toJSON ( object = {}, lines = 2 )
 {
   return JSON.stringify( object, null, lines );
+}
+// removeDb( [ "fines", "arrest", "notes" ] );
+
+function removeDb ( name = "" )
+{
+  if ( Array.isArray( name ) )
+  {
+    for ( const nameDb of name )
+    {
+      db.all( `DROP TABLE ${ nameDb };`, ( err ) =>
+      {
+        if ( err )
+          console.log( err );
+        else
+          console.log( `usunięto ${ nameDb }` );
+      } )
+    }
+  } else
+  {
+    db.all( `DROP TABLE ${ name };`, ( err ) =>
+    {
+      if ( err )
+        console.log( err );
+      else
+        console.log( `usunięto ${ name }` );
+    } )
+  }
 }
 // db.all( "INSERT INTO notes (userId,name,description,name) VALUES (3,'test','test','test')" )
 // for ( const table in tables )

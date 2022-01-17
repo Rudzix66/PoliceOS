@@ -9,9 +9,9 @@ function URLParams ( object = {} )
   return params;
 }
 var a = 0
-const get = ( url, object = {}, type = null ) =>
+const get = ( url, object = null, type = null ) =>
 {
-  if ( Object.keys( object ).length )
+  if ( object instanceof Object )
   {
     const params = [];
     if ( !/\/$/gi.test( url ) )
@@ -22,7 +22,8 @@ const get = ( url, object = {}, type = null ) =>
       params.push( `${ key }=${ object[ key ] }` );
     }
     url += params.join( "&" );
-  }
+  } else
+    type = object;
   return fetch( url, {
     method: "GET",
   } ).then( e =>
@@ -38,11 +39,14 @@ const get = ( url, object = {}, type = null ) =>
     }
   } );
 };
-const post = ( url, object = {}, type = null ) =>
+const post = ( url, object = null, type = null ) =>
 {
+  const body = object instanceof Object ? URLParams( object ) : null;
+  if ( body )
+    type = object;
   return fetch( url, {
     method: "POST",
-    body: URLParams( object )
+    body
   } ).then( e =>
   {
     switch ( type )

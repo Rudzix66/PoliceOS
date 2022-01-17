@@ -16,6 +16,15 @@ function response ( code = 400, message = "" )
   } );
 }
 
+function replaceEmpty ( value = "", empty = 0 )
+{
+  if ( value instanceof String )
+    value.trim();
+  if ( !value )
+    return empty;
+  else return value;
+}
+
 app.use( express.urlencoded( { extended: true } ) )
 app.set( "view engine", "ejs" );
 app.use( express.static( __dirname + "/views" ) );
@@ -166,6 +175,100 @@ app.get( "/usersInfo", function ( req, res )
       res.send( toJSON( rows ) );
     }
   } );
+} );
+app.post( "/usersInfo", function ( req, res )
+{
+  const action = replaceEmpty( req.body.action, "" );
+  const view = replaceEmpty( req.body.view, "" );
+  const name = replaceEmpty( req.body.name, "" );
+  const reason = replaceEmpty( req.body.reason, "" );
+  const description = replaceEmpty( req.body.description, "" );
+  const value = replaceEmpty( req.body.value, "" );
+  const userId = parseInt( req.body.id );
+  const available = [ "fines", "arrest", "notes" ];
+  const updateAvailable = [ "name", "reason", "description" ]
+  // To jest do poprawy....
+  if ( !~available.indexOf( view ) || !userId || isNaN( userId ) )
+    return res.send( response( 400, toJSON(
+      {
+        message: "Jedno jest źle",
+        view,
+        userId
+      }
+    ) ) );
+  const queries = {
+    add: {
+      query: `INSERT INTO ${ view } (userId,name,description,reason) VALUES (?,?,?,?);`,
+      data: [ userId, name, description, reason ],
+      cb: function ( err )
+      {
+        const id = this.lastID;
+        if ( err )
+        {
+          return res.send( response( 400, {
+            error: err, data: [ userId, name, description, reason ], query: `INSET INTO ${ view } (userid,name,description,reason) VALUES (?,?,?,?);`
+          } ) );
+        } else
+        {
+          return res.send( response( 200, { id } ) );
+        }
+      }
+    },
+    update: {
+      query: `UPDATE ${ view } SET ${ name } = ? WHERE id = ?;`,
+      data: [ value, userId ],
+      cb: function ( err )
+      {
+        const changes = this.changes;
+        if ( err )
+        {
+          return res.send( response( 400, { error: err } ) );
+        } else
+        {
+          res.send( response( 200, { changes } ) );
+        }
+      }
+    },
+    delete: {
+      query: `DELETE FROM ${ view } WHERE id = ?;`,
+      data: [ userId ],
+      cb: function ( err )
+      {
+        const changes = this.changes;
+        if ( err )
+        {
+          return res.send( response( 400, { error: err } ) );
+        } else
+        {
+          res.send( response( 200, toJSON( {
+            changes
+          } ) ) );
+        }
+      }
+    }
+  }
+  switch ( action )
+  {
+    case "add":
+      const add = queries.add;
+      if ( !name || !description || !userId || !reason )
+        return response( 400, "wrong values" );
+      db.all( add.query, add.data, add.cb );
+      break;
+    case "update":
+      if ( !~updateAvailable.indexOf( name ) )
+        return res.send( toJSON( code[ "400" ] ) );
+      const update = queries.update;
+      db.all( update.query, update.data, update.cb );
+      break;
+    case "delete":
+      const del = queries.delete;
+      db.all( del.query, del.data, del.cb );
+      break;
+    default:
+      res.send( toJSON( code[ "400" ] ) )
+      break;
+  }
 } );
 app.post( "/users", ( req, res ) =>
 {

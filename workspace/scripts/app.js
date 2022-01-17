@@ -10,6 +10,7 @@
   const addPearson = document.querySelector( ".add" )
   const nav = u( ".nav-btn" );
   const backArrow = u( '.back-arrow' )
+  debugger
 
   backArrow.on( "click", back )
 
@@ -18,6 +19,7 @@
     const btn = u( this );
     const view = btn.data( "view" );
     const userWrapper = u( ".user-wrapper.active" );
+    const userId = parseInt( userWrapper.data( "id" ) );
     const boxes = userWrapper.find( ".box" );
     const length = userWrapper.nodes.length;
 
@@ -28,6 +30,7 @@
     btn.addClass( "active" );
     boxes.removeClass( "active" );
     userWrapper.find( `.box.${ view }` ).addClass( "active" );
+    loadUserInfo.call( userWrapper, view, userId );
   } )
 
   if ( localUser )
@@ -148,7 +151,6 @@
         last_name: last_name.value,
         birth_date: birth_date.value,
       };
-      console.log( params )
       anime( {
         ...options,
         opacity: [ 1, 0 ],
@@ -174,6 +176,16 @@
 
 } )();
 
+function loadUserInfo ( name = "", id = 0 )
+{
+  if ( !id || isNaN( id ) )
+    return;
+  get( "/usersInfo", { name, id }, "json" ).then( e =>
+  {
+    console.log( e )
+  } )
+}
+
 function loadUsers ()
 {
   get( "/users/*", "json" ).then( data =>
@@ -197,7 +209,6 @@ function back ()
 
   wrappers.removeClass( "active" );
   userView.addClass( "active" );
-  console.log( userView )
   nav.removeClass( "active" );
   backArrow.addClass( "hidden" );
 }
@@ -252,8 +263,9 @@ function createUserWrapper ( id = 1 )
       </div>
       ` ).first(); //Nazwij to tutaj inacze niż wrapper //ok
 
-    add.addEventListener("click", () => {
-      const html = `
+      add.addEventListener( "click", () =>
+      {
+        const html = `
       <div class="add-user-message-wrapper">
       <div class="add-user-message">
         <div class="col">
@@ -276,9 +288,9 @@ function createUserWrapper ( id = 1 )
       </div>
     </div>
     `
-    const element = u( html );
-    u(mainView).append(element)
-    })
+        const element = u( html );
+        u( mainView ).append( element )
+      } )
       return u( "<div>" ).addClass( className ).append( [ header, hr, br, add ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
@@ -297,7 +309,6 @@ function createUsersSelector ( value, users = [] )
   u( usersView ).addClass( "active" ).removeClass( "grid empty" );
 
   u( usersView ).find( ".name[data-id]" ).remove();
-
   if ( users.length )
   {
     usersView.addClass( "grid" );
@@ -404,7 +415,6 @@ function indexAlertBox ()
 
   function alertInputEvent ()
   {
-    console.log( submit );
     const isEmpty = [ inputName, inputStatus ].every( ( el ) => el.value.trim() );
 
     if ( !isEmpty )
@@ -459,3 +469,24 @@ function indexCoppyMessage ()
     }
   } )
 }
+
+// post( "/usersInfo", {
+//   action: "add",
+//   view: "fines",
+//   name: "test",
+//   description: "test",
+//   reason: "test",
+//   id: 1
+// } )
+// post( "/usersInfo", {
+//   action: "update",
+//   view: "fines",
+//   name: "name",
+//   value: 1234,
+//   id: 2
+// } )
+// post( "/usersInfo", {
+//   action: "delete",
+//   view: "fines",
+//   id: 2
+// } )
