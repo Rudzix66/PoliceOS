@@ -18,6 +18,10 @@ const jsDefault = {
   from: "./workspace/scripts/default/*.js",
   to: "./views/scripts/default",
 };
+const components = {
+  from: "./workspace/scripts/components/*.js",
+  to: "./views/scripts/components/"
+}
 const html = {
   from: "./workspace/html/*.html",
   to: "./views/html",
@@ -63,6 +67,17 @@ gulp.task( 'jsDefault', function ()
     } ) )
     .pipe( gulp.dest( jsDefault.to ) )
 } );
+gulp.task( "components", function ()
+{
+  return gulp.src( components.from )
+    .pipe( minify.js( {
+      ext: {
+        min: '.js'
+      },
+      noSource: true
+    } ) )
+    .pipe( gulp.dest( components.to ) )
+} );
 
 // html minify
 gulp.task( "html", function ()
@@ -76,6 +91,7 @@ gulp.task( "html", function ()
 gulp.watch( sass.from, gulp.series( "sass", "autoprefixer" ) );
 gulp.watch( js.from, gulp.series( "js" ) );
 gulp.watch( jsDefault.from, gulp.series( "jsDefault" ) );
+gulp.watch( components.from, gulp.series( "components" ) );
 gulp.watch( html.from, gulp.series( "html" ) );
 
-gulp.task( "default", gulp.series( "js", "jsDefault", "html", "sass", "autoprefixer" ) );
+gulp.task( "default", gulp.series( "js", "jsDefault", "components", "html", "sass", "autoprefixer" ) );
