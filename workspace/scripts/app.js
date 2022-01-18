@@ -269,21 +269,23 @@ function createUserWrapper ( id = 1 )
         const div = finesSelectBox();
         const finesWrapper = div.first();
         const submit = div.find( "button[type=submit]" );
-        const hide = {
+        const options = {
           targets: finesWrapper,
           duration: 300,
-          opacity: [ 1, 0 ],
           easing: "linear",
-          complete: () =>
-          {
-            finesWrapper.remove();
-          }
         };
 
         div.on( "click", function ( e )
         {
           if ( e.target === e.currentTarget )
-            anime( hide );
+            anime( {
+              ...options,
+              opacity: [ 1, 0 ],
+              complete: () =>
+              {
+                finesWrapper.remove();
+              }
+            } );
         } )
 
         submit.on( "click", function ()
@@ -297,7 +299,15 @@ function createUserWrapper ( id = 1 )
             id: 1
           } )
         } )
-        u( mainView ).append( div.nodes )
+
+        anime( {
+          ...options,
+          opacity: [ 0, 1 ],
+          begin: function ()
+          {
+            u( mainView ).append( div.nodes );
+          }
+        } );
       } )
       return u( "<div>" ).addClass( className ).append( [ header, hr, br, add ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
