@@ -325,9 +325,18 @@ function createFinesSelector() {
     for (const fines of data) {
       const html = u(`
         <div class="fines-box">
-          <p>Nazwa: ${fines.name}</p>
-          <p>Powód: ${fines.reason}</p>
-          <p>Opis: ${fines.description}</p>
+          <label>
+            <span>Nazwa</span>
+            <input type="text" name="fines_name" id="fines_name" value="${fines.name}">
+          </label>
+          <label>
+            <span>Powód:</span>
+            <input type="text" name="fines_reason" id="fines_reason" value="${fines.reason}">
+          </label>
+          <label>
+            <span>Opis:</span>
+            <input type="text" name="fines_description" id="fines_description" value="${fines.description}">
+          </label>
         </div>
       `).data({id: fines.id})
 
