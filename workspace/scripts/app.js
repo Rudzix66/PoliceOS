@@ -267,26 +267,26 @@ function createUserWrapper ( id = 1 )
       add.addEventListener( "click", () =>
       {
         const div = finesSelectBox();
-
-        const submit = div.querySelector( "button[type=submit]" );
+        const finesWrapper = div.first();
+        const submit = div.find( "button[type=submit]" );
         const hide = {
-          targets: div,
+          targets: finesWrapper,
           duration: 300,
           opacity: [ 1, 0 ],
           easing: "linear",
           complete: () =>
           {
-            div.remove();
+            finesWrapper.remove();
           }
         };
 
-        u( addFines ).on( "click", function ( e )
+        div.on( "click", function ( e )
         {
           if ( e.target === e.currentTarget )
             anime( hide );
         } )
 
-        submit.addEventListener( "click", function ()
+        submit.on( "click", function ()
         {
           post( "/usersInfo", {
             action: "add",
@@ -297,9 +297,7 @@ function createUserWrapper ( id = 1 )
             id: 1
           } )
         } )
-
-        const element = u( div );
-        u( mainView ).append( element )
+        u( mainView ).append( div.nodes )
       } )
       return u( "<div>" ).addClass( className ).append( [ header, hr, br, add ] );
     }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
