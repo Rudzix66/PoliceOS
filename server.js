@@ -159,19 +159,32 @@ app.get( "/users/:id", ( req, res ) =>
 app.get( "/usersInfo", function ( req, res )
 {
   const name = req.query.name;
-  const id = parseInt( req.query.id );
+  const id = req.query.id === "*" ? "*" : parseInt( req.query.id );
   const names = [ "fines", "arrest", "notes" ];
-  if ( !~names.indexOf( name ) )
+  if ( !~names.indexOf( name ) || !( Number( id ) || id === "*" ) )
     return res.send( toJSON( code[ "400" ] ) );
+  const queries = {
+    all: {
+      query: `SELECT * FROM ${ name };`,
+      data: []
+    },
+    user: {
+      query: `SELECT * FROM ${ name } WHERE userId = ?;`,
+      data: [ id ]
+    }
+  };
+  let query = { ...queries.all };
+  console.log( id )
+  if ( Number( id ) )
+    query = { ...queries.user };
 
-  db.all( `SELECT * FROM ${ name } WHERE userId = ?;`, [ id ], function ( err, rows )
+  db.all( query.query, query.data, function ( err, rows )
   {
     if ( err )
     {
       res.send( toJSON( code[ "400" ] ) )
     } else
     {
-      console.log( rows )
       res.send( toJSON( rows ) );
     }
   } );
