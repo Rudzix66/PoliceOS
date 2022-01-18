@@ -224,55 +224,60 @@ function createUserWrapper(id = 1) {
         <i class="icons" style="font-size: 75px;">add</i>
         <p style="font-size: 20px;">Dodaj</p>
       </div>
-      `).first(); //Nazwij to tutaj inacze niż wrapper //ok
+      ` ).first(); //Nazwij to tutaj inacze niż wrapper //ok
 
-        add.addEventListener("click", () => {
-          const div = finesSelectBox();
-          const submit = div.querySelector("button[type=submit]");
-          const hide = {
-            targets: div,
-            duration: 200,
-            opacity: [1, 0],
-            easing: "linear",
-            complete: () => {
-              div.remove();
-            },
-          };
+      add.addEventListener( "click", () =>
+      {
+        const div = finesSelectBox();
+        const finesWrapper = div.first();
+        const submit = div.find( "button[type=submit]" );
+        const options = {
+          targets: finesWrapper,
+          duration: 300,
+          easing: "linear",
+        };
 
-          u(div).on("click", function (e) {
-            if (e.target === e.currentTarget) anime(hide);
-          });
-          submit.addEventListener("click", () => {
-            anime(hide);
-          });
+        div.on( "click", function ( e )
+        {
+          if ( e.target === e.currentTarget )
+            anime( {
+              ...options,
+              opacity: [ 1, 0 ],
+              complete: () =>
+              {
+                finesWrapper.remove();
+              }
+            } );
+        } )
 
-          submit.addEventListener("click", function () {
-            post("/usersInfo", {
-              action: "add",
-              view: "fines",
-              name: "test",
-              description: "test",
-              reason: "test",
-              id: 1,
-            });
-          });
+        submit.on( "click", function ()
+        {
+          post( "/usersInfo", {
+            action: "add",
+            view: "fines",
+            name: "test",
+            description: "test",
+            reason: "test",
+            id: 1
+          } )
+        } )
 
-          const element = u(div);
-          u(mainView).append(element);
-        });
-        return u("<div>").addClass(className).append([header, hr, br, add]);
-      },
-      [
-        { class: "fines", header: "Mandaty" },
-        { class: "arrest", header: "Aresztowania" },
-        { class: "notes", header: "Notatki" },
-      ]
-    );
+        anime( {
+          ...options,
+          opacity: [ 0, 1 ],
+          begin: function ()
+          {
+            u( mainView ).append( div.nodes );
+          }
+        } );
+      } )
+      return u( "<div>" ).addClass( className ).append( [ header, hr, br, add ] );
+    }, [ { class: "fines", header: "Mandaty" }, { class: "arrest", header: "Aresztowania" }, { class: "notes", header: "Notatki" } ] );
 
-  wrappers.removeClass("active");
-  wrapper.addClass("active");
-  content.append(wrapper);
-  nav.trigger("click");
+  wrappers.removeClass( "active" );
+  wrapper.addClass( "active" );
+  content.append( wrapper );
+  nav.trigger( "click" );
 }
 
 function createUsersSelector(value, users = []) {

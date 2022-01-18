@@ -34,7 +34,7 @@ function finesSelectBox ()
           <button type="submit">Dodaj</button>
         </div>
       </div>
-      `).first();
+      `);
   return html;
 }
 
