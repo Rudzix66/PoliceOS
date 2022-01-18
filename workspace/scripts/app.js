@@ -224,13 +224,15 @@ function createUserWrapper(id = 1) {
         <i class="icons" style="font-size: 75px;">add</i>
         <p style="font-size: 20px;">Dodaj</p>
       </div>
-      ` ).first(); //Nazwij to tutaj inacze niż wrapper //ok
+      ` ).first();
 
       add.addEventListener( "click", () =>
       {
         const div = finesSelectBox();
         const finesWrapper = div.first();
         const submit = div.find( "button[type=submit]" );
+        const reason = div.find("#fines_reasons");
+        const description = div.find("#fines_description");
         const options = {
           targets: finesWrapper,
           duration: 300,
@@ -326,7 +328,7 @@ function createFinesSelector() {
       const html = u(`
         <div class="fines-box">
           <label>
-            <span>Nazwa</span>
+            <span>Nazwa:</span>
             <input type="text" name="fines_name" id="fines_name" value="${fines.name}">
           </label>
           <label>
