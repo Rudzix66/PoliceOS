@@ -268,16 +268,16 @@ function createUserWrapper ( id = 1 )
       {
         const div = finesSelectBox();
 
-        const addFines = div.querySelector( '.add-fines-wrapper' )
+        const addFines = div.querySelector( '.add-fines-wrapper' );
         const submit = div.querySelector( "button[type=submit]" );
         const hide = {
-          targets: addFines,
+          targets: div,
           duration: 300,
           opacity: [ 1, 0 ],
           easing: "linear",
           complete: () =>
           {
-            addFines.remove();
+            div.remove();
           }
         };
 
