@@ -268,7 +268,6 @@ function createUserWrapper ( id = 1 )
       {
         const div = finesSelectBox();
 
-        const addFines = div.querySelector( '.add-fines-wrapper' );
         const submit = div.querySelector( "button[type=submit]" );
         const hide = {
           targets: div,
@@ -287,13 +286,16 @@ function createUserWrapper ( id = 1 )
             anime( hide );
         } )
 
-        post( "/usersInfo", {
-          action: "add",
-          view: "fines",
-          name: "test",
-          description: "test",
-          reason: "test",
-          id: 1
+        submit.addEventListener( "click", function ()
+        {
+          post( "/usersInfo", {
+            action: "add",
+            view: "fines",
+            name: "test",
+            description: "test",
+            reason: "test",
+            id: 1
+          } )
         } )
 
         const element = u( div );
