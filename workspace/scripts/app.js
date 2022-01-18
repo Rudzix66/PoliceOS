@@ -266,6 +266,7 @@ function createUserWrapper ( id = 1 )
 
       add.addEventListener( "click", () =>
       {
+        const div = document.createElement( "div" );
         const html = `
         <div class="add-fines-wrapper">
         <div class="add-fines">
@@ -301,6 +302,22 @@ function createUserWrapper ( id = 1 )
         </div>
       </div>
       `
+      div.innerHTML = html
+
+      const addFines = div.querySelector('.add-fines-wrapper')
+      const submit = div.querySelector( "button[type=submit]" );
+      const hide = {
+        targets: addFines,
+        duration: 300,
+        opacity: [ 1, 0 ],
+        easing: "linear",
+        complete: () =>
+        {
+          addFines.remove();
+        }
+      };
+
+      anime( hide )
 
       post( "/usersInfo", {
         action: "add",
