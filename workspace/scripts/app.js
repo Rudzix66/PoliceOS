@@ -281,7 +281,11 @@ function createUserWrapper ( id = 1 )
           }
         };
 
-        anime( hide )
+        u( addFines ).on( "click", function ( e )
+        {
+          if ( e.target === e.currentTarget )
+            anime( hide );
+        } )
 
         post( "/usersInfo", {
           action: "add",
