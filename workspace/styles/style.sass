@@ -396,7 +396,22 @@ button
       outline: none
 
 .fines-box
+  pointer-events: none
   float: left
-  padding: 8px
+  padding: 4px
   background-color: transparentize(#222,.5 )
   margin: 12px
+  display: flex
+  flex-direction: column
+  align-items: center
+  background-color: transparentize(black, .35)
+  border-radius: 6px
+  padding: 12px
+  overflow: hidden
+  label
+  display: grid
+  grid-template-columns: repeat(2,1fr)
+  input
+  margin-bottom: 12px
+  padding: 5px
+  background-color: #202020
