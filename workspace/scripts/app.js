@@ -269,6 +269,7 @@ function createUserWrapper ( id = 1 )
 
         add.addEventListener( "click", () =>
         {
+          const pearsonID = 1
           const div = finesSelectBox();
           const finesWrapper = div.first();
           const submit = div.find( "button[type=submit]" );
@@ -302,7 +303,7 @@ function createUserWrapper ( id = 1 )
               name: "Mandat",
               description: description.value,
               reason: reason.value,
-              id: 1
+              id: pearsonID
             } )
             anime( {
               ...options,
@@ -413,20 +414,20 @@ function indexCoppyMessage ()
     },
   } );
 }
-// function deleteFines() {
-//   get( "/usersInfo", {
-//     name: "fines",
-//     id: 1,
-//   },"json").then(data => { 
-//     for(const fines of data){
-//       post( "/usersInfo", {
-//         action: "delete",
-//         view: "fines",
-//         id: fines.id
-//       })
-//     }
-//   })
-// }
+function deleteFines() {
+  get( "/usersInfo", {
+    name: "fines",
+    id: 1,
+  },"json").then(data => { 
+    for(const fines of data){
+      post( "/usersInfo", {
+        action: "delete",
+        view: "fines",
+        id: fines.id
+      })
+    }
+  })
+}
 
 // post( "/usersInfo", {
 //   action: "add",
