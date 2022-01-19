@@ -240,7 +240,6 @@ function back ()
 function checkUserWrapper ( id )
 {
   id = parseInt( id );
-  const btn = this;
   const backArrow = u( ".back-arrow" );
   const mainView = u( ".main-view" );
   const wrappers = mainView.find( ".wrapper" );
@@ -321,7 +320,16 @@ function createUserWrapper ( id = 1 )
               reason: "test",
               id: 1
             } )
-          } )
+            anime( {
+            ...options,
+            opacity: [ 1, 0 ],
+            complete: () =>
+            {
+              finesWrapper.remove();
+              location.reload()
+            }
+          } );
+          })
 
           anime( {
             ...options,
