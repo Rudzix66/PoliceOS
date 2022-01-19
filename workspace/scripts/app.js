@@ -273,6 +273,8 @@ function createUserWrapper ( id = 1 )
           const submit = finesWrapper.find( "button[type=submit]" );
           const reason = finesWrapper.find( "#fines_reasons" ).first();
           const description = finesWrapper.find( "#fines_description" ).first();
+          const userWrapper = u( ".user-wrapper.active" );
+          const userId = parseInt( userWrapper.data( "id" ) );
           const options = {
             targets: finesWrapper.first(),
             duration: 300,
@@ -301,7 +303,7 @@ function createUserWrapper ( id = 1 )
               name: "Mandat",
               description: description.value,
               reason: reason.value,
-              id: 1
+              id: userId
             }, "json" ).then( data =>
             {
               if ( data.code === 200 )
@@ -312,6 +314,7 @@ function createUserWrapper ( id = 1 )
                   complete: () =>
                   {
                     finesWrapper.remove();
+                    location.reload()
                   }
                 } );
               }
@@ -419,7 +422,7 @@ function indexCoppyMessage ()
 function deleteFines() {
   get( "/usersInfo", {
     name: "fines",
-    id: 1,
+    id: 3,
   },"json").then(data => {
     for(const fines of data){
       post( "/usersInfo", {
