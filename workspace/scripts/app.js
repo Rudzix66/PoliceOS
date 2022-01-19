@@ -419,7 +419,8 @@ function indexCoppyMessage ()
     },
   } );
 }
-function deleteFines() {
+function deleteFines ()
+{
   get( "/usersInfo", {
     name: "fines",
     id: 3,
@@ -429,9 +430,9 @@ function deleteFines() {
         action: "delete",
         view: "fines",
         id: fines.id
-      })
+      } )
     }
-  })
+  } )
 }
 
 // post( "/usersInfo", {
