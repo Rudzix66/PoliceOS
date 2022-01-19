@@ -3,6 +3,7 @@ import finesSelectBox from "./components/finesSelectBox.js";
 import indexAlertBox from "./components/indexAlertBox.js";
 ( function ()
 {
+  // deleteFines()
   const userName = document.querySelector( "#user-name" );
   const userStatus = document.querySelector( "#user-status" );
   const localUser = localStorage.getItem( "user" );
@@ -271,6 +272,8 @@ function createUserWrapper ( id = 1 )
           const div = finesSelectBox();
           const finesWrapper = div.first();
           const submit = div.find( "button[type=submit]" );
+          const reason = div.find("#fines_reasons").first();
+          const description =  div.find("#fines_description").first();
           const options = {
             targets: finesWrapper,
             duration: 300,
@@ -292,12 +295,13 @@ function createUserWrapper ( id = 1 )
 
           submit.on( "click", function ()
           {
+            console.log(reason.value, description.value);
             post( "/usersInfo", {
               action: "add",
               view: "fines",
-              name: "test",
-              description: "test",
-              reason: "test",
+              name: "Mandat",
+              description: description.value,
+              reason: reason.value,
               id: 1
             } )
             anime( {
@@ -409,6 +413,20 @@ function indexCoppyMessage ()
     },
   } );
 }
+// function deleteFines() {
+//   get( "/usersInfo", {
+//     name: "fines",
+//     id: 1,
+//   },"json").then(data => { 
+//     for(const fines of data){
+//       post( "/usersInfo", {
+//         action: "delete",
+//         view: "fines",
+//         id: fines.id
+//       })
+//     }
+//   })
+// }
 
 // post( "/usersInfo", {
 //   action: "add",
