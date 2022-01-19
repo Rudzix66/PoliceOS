@@ -269,19 +269,17 @@ function createUserWrapper ( id = 1 )
 
         add.addEventListener( "click", () =>
         {
-          const pearsonID = 1
-          const div = finesSelectBox();
-          const finesWrapper = div.first();
-          const submit = div.find( "button[type=submit]" );
-          const reason = div.find("#fines_reasons").first();
-          const description =  div.find("#fines_description").first();
+          const finesWrapper = finesSelectBox();
+          const submit = finesWrapper.find( "button[type=submit]" );
+          const reason = finesWrapper.find( "#fines_reasons" ).first();
+          const description = finesWrapper.find( "#fines_description" ).first();
           const options = {
-            targets: finesWrapper,
+            targets: finesWrapper.first(),
             duration: 300,
             easing: "linear",
           };
 
-          div.on( "click", function ( e )
+          finesWrapper.on( "click", function ( e )
           {
             if ( e.target === e.currentTarget )
               anime( {
@@ -296,24 +294,28 @@ function createUserWrapper ( id = 1 )
 
           submit.on( "click", function ()
           {
-            console.log(reason.value, description.value);
+            console.log( reason.value, description.value );
             post( "/usersInfo", {
               action: "add",
               view: "fines",
               name: "Mandat",
               description: description.value,
               reason: reason.value,
-              id: pearsonID
-            } )
-            anime( {
-              ...options,
-              opacity: [ 1, 0 ],
-              complete: () =>
+              id: 1
+            }, "json" ).then( data =>
+            {
+              if ( data.code === 200 )
               {
-                finesWrapper.remove();
-                location.reload()
+                anime( {
+                  ...options,
+                  opacity: [ 1, 0 ],
+                  complete: () =>
+                  {
+                    finesWrapper.remove();
+                  }
+                } );
               }
-            } );
+            } )
           } )
 
           anime( {
@@ -321,7 +323,7 @@ function createUserWrapper ( id = 1 )
             opacity: [ 0, 1 ],
             begin: function ()
             {
-              u( mainView ).append( div.nodes );
+              u( mainView ).append( finesWrapper.nodes );
             }
           } );
         } )
@@ -418,7 +420,7 @@ function deleteFines() {
   get( "/usersInfo", {
     name: "fines",
     id: 1,
-  },"json").then(data => { 
+  },"json").then(data => {
     for(const fines of data){
       post( "/usersInfo", {
         action: "delete",
