@@ -1,3 +1,4 @@
+import addUserMessage from "./components/addUserMessage.js";
 import finesSelectBox from "./components/finesSelectBox.js";
 import indexAlertBox from "./components/indexAlertBox.js";
 ( function ()
@@ -89,28 +90,7 @@ import indexAlertBox from "./components/indexAlertBox.js";
 
   addPearson.addEventListener( "click", () =>
   {
-    const html = `
-    <div class="add-user-message-wrapper">
-      <div class="add-user-message">
-        <div class="col">
-          <label>
-            <span>Wpisz imię:</span>
-            <input type="text" name="first_name" id="first_name">
-          </label>
-          <label>
-            <span>Wpisz nazwisko:</span>
-            <input type="text" name="last_name" id="last_name">
-          </label>
-          <label>
-            <span>Wybierz datę urodzenia:</span>
-            <input type="date" name="birth_date" id="birth_date">
-          </label>
-        </div>
-        <button type="submit">Dodaj</button>
-      </div>
-    </div>
-    `;
-    const element = u( html );
+    const element = addUserMessage();
     const first_name = element.find( "#first_name" ).first();
     const last_name = element.find( "#last_name" ).first();
     const birth_date = element.find( "#birth_date" ).first();
@@ -325,15 +305,15 @@ function createUserWrapper ( id = 1 )
               id: 1
             } )
             anime( {
-            ...options,
-            opacity: [ 1, 0 ],
-            complete: () =>
-            {
-              finesWrapper.remove();
-              location.reload()
-            }
-          } );
-          })
+              ...options,
+              opacity: [ 1, 0 ],
+              complete: () =>
+              {
+                finesWrapper.remove();
+                location.reload()
+              }
+            } );
+          } )
 
           anime( {
             ...options,
