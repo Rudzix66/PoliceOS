@@ -272,8 +272,8 @@ function createUserWrapper ( id = 1 )
           const div = finesSelectBox();
           const finesWrapper = div.first();
           const submit = div.find( "button[type=submit]" );
-          const reason = div.find("#fines_reasons");
-          const description =  div.find("#fines_description");
+          const reason = div.find("#fines_reasons").first();
+          const description =  div.find("#fines_description").first();
           const options = {
             targets: finesWrapper,
             duration: 300,
@@ -295,7 +295,7 @@ function createUserWrapper ( id = 1 )
 
           submit.on( "click", function ()
           {
-            console.log(reason.first().value, description.first().value);
+            console.log(reason.value, description.value);
             post( "/usersInfo", {
               action: "add",
               view: "fines",
