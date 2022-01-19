@@ -266,8 +266,8 @@ function createUserWrapper ( id = 1 )
           const finesWrapper = finesSelectBox();
           const submit = finesWrapper.find( "button[type=submit]" );
           const name = "Mandat";
-          const reason = finesWrapper.find( "#fines_reasons" ).first().value || "undefined";
-          const description = finesWrapper.find( "#fines_description" ).first().value || "undefined";
+          const reasonEl = finesWrapper.find( "#fines_reasons" ).first();
+          const descriptionEl = finesWrapper.find( "#fines_description" ).first();
           const options = {
             targets: finesWrapper.first(),
             duration: 300,
@@ -291,6 +291,8 @@ function createUserWrapper ( id = 1 )
 
           submit.on( "click", function ()
           {
+            const reason = reasonEl.value.trim();
+            const description = descriptionEl.value.trim();
             post( "/usersInfo", {
               action: "add",
               view: "fines",
@@ -307,7 +309,7 @@ function createUserWrapper ( id = 1 )
                 const fine = finesBox( {
                   name,
                   description,
-                  reason
+                  reason,
                 } ).data( { id: data.data.id } );
                 userWrapperActive.append( fine.nodes );
               }
