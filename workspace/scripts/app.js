@@ -416,19 +416,22 @@ function indexCoppyMessage ()
     },
   } );
 }
-function deleteFines() {
+function deleteFines ()
+{
   get( "/usersInfo", {
     name: "fines",
     id: 1,
-  },"json").then(data => {
-    for(const fines of data){
+  }, "json" ).then( data =>
+  {
+    for ( const fines of data )
+    {
       post( "/usersInfo", {
         action: "delete",
         view: "fines",
         id: fines.id
-      })
+      } )
     }
-  })
+  } )
 }
 
 // post( "/usersInfo", {
