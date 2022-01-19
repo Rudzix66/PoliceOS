@@ -423,7 +423,7 @@ function deleteFines ()
 {
   get( "/usersInfo", {
     name: "fines",
-    id: 3,
+    id: 1,
   },"json").then(data => {
     for(const fines of data){
       post( "/usersInfo", {
