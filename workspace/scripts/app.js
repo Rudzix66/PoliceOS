@@ -416,20 +416,20 @@ function indexCoppyMessage ()
     },
   } );
 }
-// function deleteFines() {
-//   get( "/usersInfo", {
-//     name: "fines",
-//     id: 1,
-//   },"json").then(data => {
-//     for(const fines of data){
-//       post( "/usersInfo", {
-//         action: "delete",
-//         view: "fines",
-//         id: fines.id
-//       })
-//     }
-//   })
-// }
+function deleteFines() {
+  get( "/usersInfo", {
+    name: "fines",
+    id: 1,
+  },"json").then(data => {
+    for(const fines of data){
+      post( "/usersInfo", {
+        action: "delete",
+        view: "fines",
+        id: fines.id
+      })
+    }
+  })
+}
 
 // post( "/usersInfo", {
 //   action: "add",
