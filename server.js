@@ -10,10 +10,20 @@ const port = 3000;
 
 function response ( code = 400, message = "" )
 {
-  return toJSON( {
-    code,
-    message
-  } );
+  if ( message instanceof Object )
+  {
+    return toJSON( {
+      code,
+      data: { ...message }
+    } );
+  } else
+  {
+    return toJSON( {
+      code,
+      message
+    } );
+  }
+
 }
 
 function replaceEmpty ( value = "", empty = 0 )
@@ -202,13 +212,13 @@ app.post( "/usersInfo", function ( req, res )
   const updateAvailable = [ "name", "reason", "description" ]
   // To jest do poprawy....
   if ( !~available.indexOf( view ) || !userId || isNaN( userId ) )
-    return res.send( response( 400, toJSON(
+    return res.send( response( 400,
       {
         message: "Jedno jest źle",
         view,
         userId
       }
-    ) ) );
+    ) );
   const queries = {
     add: {
       query: `INSERT INTO ${ view } (userId,name,description,reason) VALUES (?,?,?,?);`,
@@ -238,7 +248,7 @@ app.post( "/usersInfo", function ( req, res )
           return res.send( response( 400, { error: err } ) );
         } else
         {
-          res.send( response( 200, { changes } ) );
+          return res.send( response( 200, { changes } ) );
         }
       }
     },
@@ -253,7 +263,7 @@ app.post( "/usersInfo", function ( req, res )
           return res.send( response( 400, { error: err } ) );
         } else
         {
-          res.send( response( 200, toJSON( {
+          return res.send( response( 200, toJSON( {
             changes
           } ) ) );
         }
@@ -265,21 +275,21 @@ app.post( "/usersInfo", function ( req, res )
     case "add":
       const add = queries.add;
       if ( !name || !description || !userId || !reason )
-        return response( 400, "wrong values" );
-      db.all( add.query, add.data, add.cb );
+        return res.send( response( 400, "wrong values" ) );
+      db.run( add.query, add.data, add.cb );
       break;
     case "update":
       if ( !~updateAvailable.indexOf( name ) )
-        return res.send( toJSON( code[ "400" ] ) );
+        return res.send( response( 400, "wrong values" ) );
       const update = queries.update;
-      db.all( update.query, update.data, update.cb );
+      db.run( update.query, update.data, update.cb );
       break;
     case "delete":
       const del = queries.delete;
-      db.all( del.query, del.data, del.cb );
+      db.run( del.query, del.data, del.cb );
       break;
     default:
-      res.send( toJSON( code[ "400" ] ) )
+      res.send( response( 400, "wrong values" ) )
       break;
   }
 } );

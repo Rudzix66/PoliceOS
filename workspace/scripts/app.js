@@ -1,4 +1,5 @@
 import addUserMessage from "./components/addUserMessage.js";
+import finesBox from "./components/finesBox.js";
 import finesSelectBox from "./components/finesSelectBox.js";
 import indexAlertBox from "./components/indexAlertBox.js";
 ( function ()
@@ -169,22 +170,14 @@ function loadUserInfo ( name = "", id = 0 )
     box.find( ".fines-box" ).remove();
     for ( const fines of data )
     {
-      const html = u( `
-        <div class="fines-box">
-          <label>
-            <span>Nazwa</span>
-            <input type="text" name="fines_name" id="fines_name" value="${ fines.name }">
-          </label>
-          <label>
-            <span>Powód:</span>
-            <input type="text" name="fines_reason" id="fines_reason" value="${ fines.reason }">
-          </label>
-          <label>
-            <span>Opis:</span>
-            <input type="text" name="fines_description" id="fines_description" value="${ fines.description }">
-          </label>
-        </div>
-      `).data( { id: fines.id } )
+      const name = fines.name;
+      const reason = fines.reason;
+      const description = fines.description;
+      const html = finesBox( {
+        name,
+        reason,
+        description
+      } ).data( { id: fines.id } )
 
       box.append( html );
     };
@@ -269,51 +262,54 @@ function createUserWrapper ( id = 1 )
 
         add.addEventListener( "click", () =>
         {
+          const userWrapperActive = u( ".user-wrapper.active" );
           const finesWrapper = finesSelectBox();
           const submit = finesWrapper.find( "button[type=submit]" );
-          const reason = finesWrapper.find( "#fines_reasons" ).first();
-          const description = finesWrapper.find( "#fines_description" ).first();
+          const name = "Mandat";
+          const reason = finesWrapper.find( "#fines_reasons" ).first().value || "undefined";
+          const description = finesWrapper.find( "#fines_description" ).first().value || "undefined";
           const options = {
             targets: finesWrapper.first(),
             duration: 300,
             easing: "linear",
           };
+          const id = parseInt( userWrapperActive.data( "id" ) );
+          const closeFinesWrapper = {
+            ...options,
+            opacity: [ 1, 0 ],
+            complete: () =>
+            {
+              finesWrapper.remove();
+            }
+          };
 
           finesWrapper.on( "click", function ( e )
           {
             if ( e.target === e.currentTarget )
-              anime( {
-                ...options,
-                opacity: [ 1, 0 ],
-                complete: () =>
-                {
-                  finesWrapper.remove();
-                }
-              } );
+              anime( closeFinesWrapper );
           } )
 
           submit.on( "click", function ()
           {
-            console.log( reason.value, description.value );
             post( "/usersInfo", {
               action: "add",
               view: "fines",
-              name: "Mandat",
-              description: description.value,
-              reason: reason.value,
-              id: 1
-            }, "json" ).then( data =>
+              name,
+              description,
+              reason,
+              id
+            } ).then( data =>
             {
+              console.log( data );
               if ( data.code === 200 )
               {
-                anime( {
-                  ...options,
-                  opacity: [ 1, 0 ],
-                  complete: () =>
-                  {
-                    finesWrapper.remove();
-                  }
-                } );
+                anime( closeFinesWrapper );
+                const fine = finesBox( {
+                  name,
+                  description,
+                  reason
+                } ).data( { id: data.data.id } );
+                userWrapperActive.append( fine.nodes );
               }
             } )
           } )

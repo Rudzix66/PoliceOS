@@ -9,7 +9,7 @@ function URLParams ( object = {} )
   return params;
 }
 var a = 0
-const get = ( url, object = null, type = null ) =>
+const get = ( url, object = null, type = "json" ) =>
 {
   if ( object instanceof Object )
   {
@@ -39,10 +39,10 @@ const get = ( url, object = null, type = null ) =>
     }
   } );
 };
-const post = ( url, object = null, type = null ) =>
+const post = function ( url, object = null, type = "json" )
 {
   const body = object instanceof Object ? URLParams( object ) : null;
-  if ( body )
+  if ( body === null )
     type = object;
   return fetch( url, {
     method: "POST",
