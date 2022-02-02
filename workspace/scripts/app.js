@@ -2,6 +2,8 @@ import addUserMessage from "./components/addUserMessage.js";
 import finesBox from "./components/finesBox.js";
 import finesSelectBox from "./components/finesSelectBox.js";
 import indexAlertBox from "./components/indexAlertBox.js";
+import overview from "./components/overview.js";
+
 ( function ()
 {
   // deleteFines()
