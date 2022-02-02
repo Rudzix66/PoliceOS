@@ -7,7 +7,7 @@ function finesBox ( o = {
   return u( `
         <div class="fines-box">
           <label>
-            <span>Nazwa</span>
+            <span>Typ:</span>
             <input type="text" name="fines_name" id="fines_name" value="${ o.name }">
           </label>
           <label>
