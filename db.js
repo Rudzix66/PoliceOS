@@ -18,7 +18,12 @@ const tables = {
     fullname TEXT,
     status TEXT,
     birth_date TIMESTAMP,
-    added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    age INT,
+    gender TEXT,
+    stopped INT,
+    suspension TEXT,
+    parole: TEXT
     `,
   fines: `
     userId INT,

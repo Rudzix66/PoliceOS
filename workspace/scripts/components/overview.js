@@ -1,17 +1,28 @@
-function overview() {
+function overview( o = {
+    first_name: "",
+    last_name: "",
+    birth_date: "",
+    age: "",
+    gender: "",
+    status: "",
+    stopped: "",
+    suspension: "",
+    parole: ""
+} ) 
+{
     const html = u( `
     <div class="overview">
         <label>
             <span>Imię:</span>
-            <input type="text" name="person_name" id="person_name" value="${ o.name }">
+            <input type="text" name="person_name" id="person_name" value="${ o.first_name }">
         </label>
         <label>
             <span>Nazwisko:</span>
-            <input type="text" name="person_lastname" id="person_lastname" value="${ o.name }">
+            <input type="text" name="person_lastname" id="person_lastname" value="${ o.last_name }">
         </label>
         <label>
             <span>Data Urodzenia:</span>
-            <input type="text" name="person_birth" id="person_birth" value="${ o.birth }">
+            <input type="text" name="person_birth" id="person_birth" value="${ o.birth_date }">
         </label>
         <label>
             <span>Wiek:</span>

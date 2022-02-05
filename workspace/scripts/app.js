@@ -294,7 +294,8 @@ function createUserWrapper ( id = 1 )
           submit.on( "click", function ()
           {
             const reason = reasonEl.value.trim();
-            const description = descriptionEl.value.trim();
+            let description = descriptionEl.value.trim();
+            description = description|| "Brak opisu"
             post( "/usersInfo", {
               action: "add",
               view: "fines",
