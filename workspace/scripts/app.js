@@ -154,6 +154,7 @@ import debounce from "./functions/debounce.function.js";
     });
   });
 })();
+
 function loadFines(id) {
   const name = "fines";
   const nav = u(".nav-btn");
