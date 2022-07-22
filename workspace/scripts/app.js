@@ -5,6 +5,10 @@ import finesSelectBox from "./components/finesSelectBox.js";
 import indexAlertBox from "./components/indexAlertBox.js";
 import indexCoppyMessage from "./components/indexCoppyMessage.js";
 import overview from "./components/overview.js";
+// functions
+import back from './functions/backArrow.function.js';
+import deleteFines from "./functions/deleteFines.function.js";
+import debounce from "./functions/debounce.function.js";
 
 (function () {
   // deleteFines(1)
@@ -17,7 +21,6 @@ import overview from "./components/overview.js";
   const search = document.querySelector("#search");
   const addPearson = document.querySelector(".add");
   const nav = u(".nav-btn");
-  const backArrow = u(".back-arrow");
 
   backArrow.on("click", back);
 
