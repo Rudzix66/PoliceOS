@@ -22,7 +22,7 @@ import debounce from "./functions/debounce.function.js";
   const addPearson = document.querySelector(".add");
   const nav = u(".nav-btn");
 
-  backArrow.on("click", back);
+  u(".back-arrow").on("click", back);
 
   nav.on("click", function () {
     const btn = u(this);
@@ -207,18 +207,7 @@ function loadUsers() {
     }
   });
 }
-function back() {
-  const mainView = u(".main-view");
-  const userView = mainView.find(".wrapper[view=users]");
-  const wrappers = mainView.find(".wrapper");
-  const nav = u(".nav-btn");
-  const backArrow = u(".back-arrow");
 
-  wrappers.removeClass("active");
-  userView.addClass("active");
-  nav.removeClass("active");
-  backArrow.addClass("hidden");
-}
 function checkUserWrapper(id) {
   id = parseInt(id);
   const backArrow = u(".back-arrow");
@@ -367,23 +356,4 @@ function createUsersSelector(value, users = []) {
       usersView.append(html);
     }
   }
-}
-
-function deleteFines(id) {
-  get(
-    "/usersInfo",
-    {
-      name: "fines",
-      id: id,
-    },
-    "json"
-  ).then((data) => {
-    for (const fines of data) {
-      post("/usersInfo", {
-        action: "delete",
-        view: "fines",
-        id: fines.id,
-      });
-    }
-  });
 }
