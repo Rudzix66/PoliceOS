@@ -22,6 +22,10 @@ const components = {
   from: "./workspace/scripts/components/*.js",
   to: "./views/scripts/components/"
 }
+const functions = {
+  from: "./workspace/scripts/functions/*.js",
+  to: "./views/scripts/functions/",
+};
 const html = {
   from: "./workspace/html/*.html",
   to: "./views/html",
@@ -78,6 +82,18 @@ gulp.task( "components", function ()
     } ) )
     .pipe( gulp.dest( components.to ) )
 } );
+gulp.task("functions", function () {
+  return gulp.src(functions.from)
+    .pipe(
+      minify.js({
+        ext: {
+          min: ".js",
+        },
+        noSource: true,
+      })
+    )
+    .pipe(gulp.dest(functions.to));
+});
 
 // html minify
 gulp.task( "html", function ()
@@ -92,6 +108,7 @@ gulp.watch( sass.from, gulp.series( "sass", "autoprefixer" ) );
 gulp.watch( js.from, gulp.series( "js" ) );
 gulp.watch( jsDefault.from, gulp.series( "jsDefault" ) );
 gulp.watch( components.from, gulp.series( "components" ) );
+gulp.watch(functions.from, gulp.series("functions"));
 gulp.watch( html.from, gulp.series( "html" ) );
 
 gulp.task( "default", gulp.series( "js", "jsDefault", "components", "html", "sass", "autoprefixer" ) );
