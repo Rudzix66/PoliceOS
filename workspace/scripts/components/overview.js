@@ -1,3 +1,13 @@
+//                  WMAGANIA
+// imię
+// Nazwisko
+// data urodzenia
+// wiek
+// płeć
+// poszukiwany/nakaz aresztowania
+// zatrzymania/ile razy zatrzymany
+// pozwolenie na broń
+
 function overview( o = {
     first_name: "",
     last_name: "",
