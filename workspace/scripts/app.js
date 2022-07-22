@@ -9,6 +9,7 @@ import overview from "./components/overview.js";
 // functions
 import back from './functions/backArrow.function.js';
 import deleteFines from "./functions/deleteFines.function.js";
+import debounce from "./functions/debounce.function.js";
 ( function ()
 {
   // deleteFines(1)
