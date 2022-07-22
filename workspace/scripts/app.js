@@ -7,7 +7,7 @@ import overview from "./components/overview.js";
 
 ( function ()
 {
-  // deleteFines()
+  // deleteFines(1)
   const userName = document.querySelector( "#user-name" );
   const userStatus = document.querySelector( "#user-status" );
   const localUser = localStorage.getItem( "user" );
@@ -296,7 +296,7 @@ function createUserWrapper ( id = 1 )
           {
             const reason = reasonEl.value.trim();
             let description = descriptionEl.value.trim();
-            description = description|| "Brak opisu"
+            description = description|| "Nie dodano notatki"
             post( "/usersInfo", {
               action: "add",
               view: "fines",
@@ -376,11 +376,11 @@ function createUsersSelector ( value, users = [] )
   }
 }
 
-function deleteFines ()
+function deleteFines (id)
 {
   get( "/usersInfo", {
     name: "fines",
-    id: 1,
+    id: id,
   }, "json" ).then( data =>
   {
     for ( const fines of data )
@@ -393,24 +393,3 @@ function deleteFines ()
     }
   } )
 }
-
-// post( "/usersInfo", {
-//   action: "add",
-//   view: "fines",
-//   name: "test",
-//   description: "test",
-//   reason: "test",
-//   id: 1
-// } )
-// post( "/usersInfo", {
-//   action: "update",
-//   view: "fines",
-//   name: "name",
-//   value: 1234,
-//   id: 2
-// } )
-// post( "/usersInfo", {
-//   action: "delete",
-//   view: "fines",
-//   id: 2
-// } )

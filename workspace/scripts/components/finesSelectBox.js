@@ -8,7 +8,7 @@ function finesSelectBox ()
               <span>Wybierz</span>
             <label for="reasons"></label>
               <select id="fines_reasons" name="reasonslist">
-                <option value="spozywanie-alkoholu-w miejscu-publicznym">Spożywanie alkoholu w miejscu publiczny</option>
+                <option>Spożywanie alkoholu w miejscu publiczny</option>
                 <option>Jazda niesprawnym pojazdem</option>
                 <option>License suspended / Jazda z zawieszonym prawem jazdy</option>
                 <option>License expired / Jazda z przedawnionym prawem jazdy</option>
@@ -27,7 +27,7 @@ function finesSelectBox ()
               </select>
             </label>
             <label>
-              <span>Dodaj krótki opis</span>
+              <span>Dodaj notatkę</span>
               <input type="text" id="fines_description" name="fines_description">
             </label>
           </div>

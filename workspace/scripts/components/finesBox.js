@@ -11,11 +11,11 @@ function finesBox ( o = {
             <input type="text" name="fines_name" id="fines_name" value="${ o.name }">
           </label>
           <label>
-            <span>Powód:</span>
+            <span>Wykroczenie:</span>
             <input type="text" name="fines_reason" id="fines_reason" value="${ o.reason }">
           </label>
           <label>
-            <span>Opis:</span>
+            <span>Notatka:</span>
             <input type="text" name="fines_description" id="fines_description" value="${ o.description }">
           </label>
         </div>
