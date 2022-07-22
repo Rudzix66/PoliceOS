@@ -1,3 +1,4 @@
+// components
 import addUserMessage from "./components/addUserMessage.js";
 import finesBox from "./components/finesBox.js";
 import finesSelectBox from "./components/finesSelectBox.js";
@@ -5,6 +6,9 @@ import indexAlertBox from "./components/indexAlertBox.js";
 import indexCoppyMessage from "./components/indexCoppyMessage.js";
 import overview from "./components/overview.js";
 
+// functions
+import back from './functions/backArrow.function.js';
+import deleteFines from "./functions/deleteFines.function.js";
 ( function ()
 {
   // deleteFines(1)
@@ -17,9 +21,8 @@ import overview from "./components/overview.js";
   const search = document.querySelector( "#search" );
   const addPearson = document.querySelector( ".add" );
   const nav = u( ".nav-btn" );
-  const backArrow = u( ".back-arrow" );
-
-  backArrow.on( "click", back );
+  
+  u( ".back-arrow" ).on('click', back);
 
   nav.on( "click", function ()
   {
@@ -201,19 +204,6 @@ function loadUsers ()
     }
   } );
 }
-function back ()
-{
-  const mainView = u( ".main-view" );
-  const userView = mainView.find( ".wrapper[view=users]" );
-  const wrappers = mainView.find( ".wrapper" );
-  const nav = u( ".nav-btn" );
-  const backArrow = u( ".back-arrow" );
-
-  wrappers.removeClass( "active" );
-  userView.addClass( "active" );
-  nav.removeClass( "active" );
-  backArrow.addClass( "hidden" );
-}
 function checkUserWrapper ( id )
 {
   id = parseInt( id );
@@ -374,22 +364,4 @@ function createUsersSelector ( value, users = [] )
       usersView.append( html );
     }
   }
-}
-
-function deleteFines (id)
-{
-  get( "/usersInfo", {
-    name: "fines",
-    id: id,
-  }, "json" ).then( data =>
-  {
-    for ( const fines of data )
-    {
-      post( "/usersInfo", {
-        action: "delete",
-        view: "fines",
-        id: fines.id
-      } )
-    }
-  } )
 }
